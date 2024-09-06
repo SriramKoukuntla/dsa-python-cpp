@@ -1,4 +1,4 @@
-#https://leetcode.com/problems/linked-list-cycle/
+#https://leetcode.com/problems/linked-list-cycle-ii/
 # Definition for singly-linked list.
 # class ListNode:
 #     def __init__(self, x):
@@ -6,10 +6,13 @@
 #         self.next = None
 
 class Solution:
-    def hasCycle(self, head: Optional[ListNode]) -> bool:
+    def detectCycle(self, head: Optional[ListNode]) -> Optional[ListNode]:
         slow, fast = head, head
         while fast and fast.next:
             slow = slow.next; fast = fast.next.next
             if slow == fast:
-                return True
-        return False
+                slow2 = head
+                while slow != slow2:
+                    slow = slow.next; slow2 = slow2.next
+                return slow
+        return None

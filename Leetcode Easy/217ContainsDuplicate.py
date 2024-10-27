@@ -12,7 +12,7 @@
 #             hashset.add(i)
 #         return False
 
-#Better way
+#Better way more compact
 class Solution:
     def containsDuplicate(self, nums: List[int]) -> bool:
         return len(set(nums)) != len(nums)

@@ -16,3 +16,18 @@ class Solution(object):
                 return True
             window.add(nums[R])
         return False
+    
+class Solution:
+    def containsNearbyDuplicate(self, nums: List[int], k: int) -> bool:
+        tracker = {}
+        for i, value in enumerate(nums):
+            if value not in tracker:
+                tracker[value] = [i]
+            else:
+                for index in tracker[value]:
+                    if (abs(index-i) <= k):
+                        return True
+                tracker[value].append(i)
+        return False
+            
+            

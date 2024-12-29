@@ -2,18 +2,13 @@
 class Solution:
     def isValid(self, s: str) -> bool:
         stack = []
-        idx = 0
-        while idx < len(s):
-            curr = s[idx]
-            if curr == "(" or curr == "{" or curr == "[":
-                stack.append(curr)
-            elif len(stack) == 0:
-                return False
-            elif curr == ")" and stack.pop() != "(":
-                return False
-            elif curr == "}" and stack.pop() != "{":
-                return False
-            elif curr == "]" and stack.pop() != "[":
-                return False
-            idx += 1
+        convert = {"}":"{",     ")":"(",    "]": "["}
+        for char in s:
+            if char in convert:
+                if len(stack) == 0:
+                    return False
+                if stack.pop() != convert[char]:
+                    return False
+            else:
+                stack.append(char)
         return len(stack) == 0

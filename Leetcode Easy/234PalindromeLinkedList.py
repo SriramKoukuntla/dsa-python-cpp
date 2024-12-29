@@ -7,6 +7,28 @@
 #         self.next = next
 class Solution:
     def isPalindrome(self, head: Optional[ListNode]) -> bool:
+        slow = head
+        fast = head
+        while fast and fast.next:
+            slow = slow.next
+            fast = fast.next.next
+        def helper(curr, prev):
+            if curr == None:
+                return prev
+            nextN = curr.next
+            curr.next = prev
+            return helper(nextN, curr)
+        left = head
+        right = helper(slow, None)
+        while right:
+            if left.val != right.val:
+                return False
+            left = left.next
+            right = right.next
+        return True
+    
+class Solution:
+    def isPalindrome(self, head: Optional[ListNode]) -> bool:
         stack = []
         slow = head
         fast = head

@@ -13,7 +13,7 @@ class Solution:
         stack = [(root, root.val)]
         while len(stack) > 0:
             node, value = stack.pop()
+            if node.left == None and node.right == None and value == targetSum: return True
             if node.left != None: stack.append((node.left, value + node.left.val))
             if node.right != None: stack.append((node.right, value + node.right.val))
-            if node.left == None and node.right == None and value == targetSum: return True
         return False

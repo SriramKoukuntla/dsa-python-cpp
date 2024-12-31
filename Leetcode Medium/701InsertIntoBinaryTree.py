@@ -5,6 +5,20 @@
 #         self.val = val
 #         self.left = left
 #         self.right = right
+#Better Solution
+class Solution:
+    def insertIntoBST(self, root: Optional[TreeNode], val: int) -> Optional[TreeNode]:
+        if root == None: return TreeNode(val)
+        parent = None
+        curr = root
+        while curr != None:
+            parent = curr
+            if val < curr.val: curr = curr.left
+            else: curr = curr.right
+        if val < parent.val: parent.left = TreeNode(val)
+        else: parent.right = TreeNode(val)
+        return root
+
 class Solution:
     def insertIntoBST(self, root: Optional[TreeNode], val: int) -> Optional[TreeNode]:
         directions = deque([])

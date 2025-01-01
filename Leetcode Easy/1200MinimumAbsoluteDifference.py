@@ -1,16 +1,13 @@
 #https://leetcode.com/problems/minimum-absolute-difference/description/
 class Solution:
     def minimumAbsDifference(self, arr: List[int]) -> List[List[int]]:
-        arr.sort()
-        minDiff = float("inf")
-        for i, value in enumerate (arr):
-            if (i == 0):
-                continue
-            minDiff = min(minDiff, abs(arr[i]-arr[i-1]))
+        arr = sorted(arr)
         ret = []
-        for i, value in enumerate(arr):
-            if (i == 0):
-                continue
-            if (abs(arr[i]-arr[i-1]) == minDiff):
-                ret.append([arr[i-1], arr[i]])
+        minDistance = float("inf")
+        for i in range(1, len(arr)):
+            distance = arr[i] - arr[i-1]
+            if distance == minDistance: ret.append([arr[i-1], arr[i]])
+            if distance < minDistance:
+                minDistance = distance
+                ret = [[arr[i-1], arr[i]]]
         return ret

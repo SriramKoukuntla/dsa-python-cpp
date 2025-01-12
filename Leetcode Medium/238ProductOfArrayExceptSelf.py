@@ -2,6 +2,23 @@
 class Solution:
     def productExceptSelf(self, nums: List[int]) -> List[int]:
         #1, 2, 3, 4
+        #1, 1, 2, 6
+        #24, 12, 4, 1
+        
+        ret = [1 for __ in range(len(nums))]
+        tempLeft = 1
+        for i in range(len(nums)-1):
+            tempLeft *= nums[i]
+            ret[i+1] *= tempLeft
+        tempRight = 1
+        for i in range(len(nums)-1):
+            tempRight *= nums[len(nums)-1-i]
+            ret[len(nums)-2-i] *= tempRight
+        return ret
+    
+class Solution:
+    def productExceptSelf(self, nums: List[int]) -> List[int]:
+        #1, 2, 3, 4
         #1, 2, 6, 24
         #24, 24, 12, 4
         left = []

@@ -12,11 +12,11 @@ class Solution:
                 else:
                     if (entry in rows[i]
                     or entry in columns[j]
-                    or squares[(i/3, j/3)]):
+                    or entry in squares[(i//3, j//3)]):
                         return False
                     rows[i].add(entry)
                     columns[j].add(entry)
-                    squares[(i/3, j/3)].add(entry)
+                    squares[(i//3, j//3)].add(entry)
         return True
     
 class Solution:

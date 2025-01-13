@@ -1,6 +1,26 @@
 #https://leetcode.com/problems/valid-sudoku/description/
 class Solution:
     def isValidSudoku(self, board: List[List[str]]) -> bool:
+        rows = collections.defaultdict(set)
+        columns = collections.defaultdict(set)
+        squares = collections.defaultdict(set)
+        for i in range(9):
+            for j in range(9):
+                entry = board[i][j]
+                if entry == ".":
+                    continue
+                else:
+                    if (entry in rows[i]
+                    or entry in columns[j]
+                    or squares[(i/3, j/3)]):
+                        return False
+                    rows[i].add(entry)
+                    columns[j].add(entry)
+                    squares[(i/3, j/3)].add(entry)
+        return True
+    
+class Solution:
+    def isValidSudoku(self, board: List[List[str]]) -> bool:
         temp = [False for __ in range(10)]
         #Checking if each row is valid
         for row in board:

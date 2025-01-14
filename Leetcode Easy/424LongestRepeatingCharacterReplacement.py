@@ -15,3 +15,25 @@ class Solution(object):
                 L += 1
             res = max(res, R-L+1)
         return res
+    
+
+class Solution:
+    def characterReplacement(self, s: str, k: int) -> int:
+        countArray = [0 for __ in range(26)]
+        left = 0
+        currSize, retSize = 0, 0
+        for right in range(len(s)):
+            currSize += 1
+            countArray[ord(s[right])-ord("A")] += 1
+            maxCharCount = 0
+            for count in countArray:
+                maxCharCount = max(maxCharCount, count)
+            if currSize-maxCharCount > k:
+                currSize -= 1
+                countArray[ord(s[left])-ord("A")] -= 1
+                maxCharCount = 0
+                for count in countArray:
+                    maxCharCount = max(maxCharCount, count)
+                left += 1
+            retSize = max(retSize, currSize)
+        return retSize

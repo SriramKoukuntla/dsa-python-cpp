@@ -11,6 +11,20 @@ class Solution:
         def helper(node):
             nonlocal maxRet
             if node == None:
+                return 0
+            left, right = helper(node.left), helper(node.right)
+            temp = max(node.val, max(node.val + left, node.val + right))
+            maxRet = max(maxRet, max(temp, node.val + left + right))
+            return temp
+        helper(root)
+        return maxRet
+
+class Solution:
+    def maxPathSum(self, root: Optional[TreeNode]) -> int:
+        maxRet = float('-inf')
+        def helper(node):
+            nonlocal maxRet
+            if node == None:
                 return None
             if node.left == None and node.right == None:
                 maxRet = max(maxRet, node.val)

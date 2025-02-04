@@ -1,4 +1,3 @@
-#https://leetcode.com/problems/design-twitter/
 from collections import defaultdict, deque
 class Twitter:
 
@@ -12,7 +11,7 @@ class Twitter:
         self.posts[userId].append((self.time, tweetId))
         if len(self.posts[userId]) > 10:
             self.posts[userId].popleft()
-        self.time+=1
+        self.time-=1
 
     def getNewsFeed(self, userId: int) -> List[int]:
         allPosts = []
@@ -23,15 +22,14 @@ class Twitter:
         length = min(10, len(allPosts))
         for i in range(length):
             ret.append(heapq.heappop(allPosts)[1])
-        return ret[::-1]
+        return ret
 
     def follow(self, followerId: int, followeeId: int) -> None:
         self.following[followerId].add(followeeId)
 
     def unfollow(self, followerId: int, followeeId: int) -> None:
-        self.following[followerId].remove(followeeId)
-
-
+        if followeeId in self.following[followerId]:
+            self.following[followerId].remove(followeeId)
 
 # Your Twitter object will be instantiated and called as such:
 # obj = Twitter()

@@ -1,5 +1,25 @@
 #https://leetcode.com/problems/subsets/description/
 
+
+#How it should be solved. Explain the tree of decisions when doing this problem in an interivew.
+class Solution:
+    def subsets(self, nums: List[int]) -> List[List[int]]:
+        ret = [] #[1, 2, 3], [1, 2], [1, 3], [1], [2, 3], [2], [3]
+        temp = []
+        def helper(i):
+            if i == len(nums):
+                ret.append(temp[:])
+                return
+            temp.append(nums[i])
+            helper(i+1)
+            temp.pop()
+            helper(i+1)
+        helper(0)
+        return ret
+    
+
+
+
 class Solution:
     def subsets(self, nums: List[int]) -> List[List[int]]:
         ret = [[]]

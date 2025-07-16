@@ -32,3 +32,21 @@ public:
         return 1 + (left > right ? left : right);
     }
 };
+
+class Solution {
+public:
+    int maxDepth(TreeNode* root) {
+        queue<tuple<TreeNode*, int>> q;
+        int res = 0;
+        q.emplace(root, 1));
+        while (!q.empty()){
+            auto [node, level] = q.front();
+            q.pop();
+            if (node == nullptr) continue;
+            res = (res > level ? res : level);
+            q.emplace(node->left, level+1);
+            q.emplace(node->right, level+1);
+        }
+        return res;
+    }
+};

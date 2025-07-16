@@ -29,3 +29,22 @@ private:
         return 1 + max(left, right);
     }
 };
+
+
+class Solution {
+public:
+    int diameterOfBinaryTree(TreeNode* root) {
+        int res = 0;
+        helper(root, res);
+        return res;
+    }
+
+private:
+    int helper(TreeNode* root, int& res){
+        if (!root) return 0;
+        int left = helper(root->left, res);
+        int right = helper(root->right, res);
+        res = max(res, left+right);
+        return 1 + max(left, right);
+    }
+};

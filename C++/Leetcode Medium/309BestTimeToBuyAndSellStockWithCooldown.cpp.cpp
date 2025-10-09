@@ -14,7 +14,7 @@ public:
         }
         return max(sold, hold);
     }
-};
+};  
 
 class Solution {
 public:

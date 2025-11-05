@@ -14,7 +14,7 @@ public:
         }
 
         //Index is node, value is distance of shortest discovered path
-        vector<int> dist(edges.size()+1, INT_MAX);
+        vector<int> dist(n, INT_MAX);
         //First number is node, second is cost
         deque<pair<int, int>> q;
         

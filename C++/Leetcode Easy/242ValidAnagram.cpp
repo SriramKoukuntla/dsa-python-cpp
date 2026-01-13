@@ -11,7 +11,7 @@ public:
             --m1[t[i]];
         }
 
-        for (auto& [c, i] : m1) if (i != 0) return false;
+        for (auto& p : m1) if (p.second != 0) return false;
         return true;
     }
 };

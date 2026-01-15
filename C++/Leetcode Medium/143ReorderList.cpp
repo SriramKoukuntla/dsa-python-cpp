@@ -11,6 +11,60 @@
 class Solution {
 public:
     void reorderList(ListNode* head) {
+        //Find middle node
+        ListNode* slow = head;
+        ListNode* fast = head;
+        while (fast->next && fast->next->next) {
+            fast = fast->next->next;
+            slow = slow->next;
+        }
+
+        //Reverse second half of list;
+        ListNode* secondHalf = slow->next;
+        slow->next = nullptr; //This makes first half have an end
+        ListNode* prev = nullptr; //This make second half have an end
+        ListNode* curr = secondHalf;
+        while (curr) {
+            ListNode* next = curr->next;
+            curr->next = prev;
+            prev = curr;
+            curr = next;
+        }
+        ListNode* tail = prev;
+
+        //Combine both lists;
+        ListNode* dummy = new ListNode();
+        ListNode* headCurr = head;
+        ListNode* tailCurr = tail;
+        while (headCurr && tailCurr) {
+            dummy->next = headCurr;
+            headCurr = headCurr->next;
+            dummy = dummy->next;
+
+            dummy->next = tailCurr;
+            tailCurr = tailCurr->next;
+            dummy = dummy->next;
+        }
+        
+        //If odd head will have one more to append
+        if (headCurr) dummy->next = headCurr;
+    }
+};
+
+
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode() : val(0), next(nullptr) {}
+ *     ListNode(int x) : val(x), next(nullptr) {}
+ *     ListNode(int x, ListNode *next) : val(x), next(next) {}
+ * };
+ */
+class Solution {
+public:
+    void reorderList(ListNode* head) {
         ListNode* slow = head;
         ListNode* fast = head;
         while (fast != nullptr && fast->next != nullptr){

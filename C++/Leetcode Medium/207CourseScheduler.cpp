@@ -1,4 +1,30 @@
 #include <vector>
+#include <unordered_map>
+using namespace std;
+class Solution {
+public:
+    bool canFinish(int numCourses, vector<vector<int>>& prerequisites) {
+        unordered_map<int, vector<int>> preReqs;
+        for (vector<int>& course : prerequisites) preReqs[course[0]].push_back(course[1]);
+        for (int i = 0; i < numCourses; ++i) {
+            unordered_set<int> visited;
+            if (!helper(i, preReqs, visited)) return false;
+        }
+        return true;
+    }
+
+    bool helper(int course, unordered_map<int, vector<int>>& preReqs, unordered_set<int>& visited){
+        if (visited.find(course) != visited.end()) return false;
+        if (preReqs[course].empty()) return true;
+        visited.insert(course);
+        for (int preReq : preReqs[course]) if (!helper(preReq, preReqs, visited)) return false;
+        visited.erase(course);
+        preReqs[course] = {};
+        return true;
+    }
+};
+
+#include <vector>
 #include <unordered_set>
 #include <unordered_map>
 #include <utility>

@@ -1,3 +1,39 @@
+#include <unordered_map>
+#include <vector>
+class Solution {
+public:
+    vector<int> findOrder(int numCourses, vector<vector<int>>& prerequisites) {
+        vector<vector<int>> postReqs(numCourses, vector<int>(0));
+        vector<int> indeg(numCourses, 0);
+        for (vector<int> p : prerequisites) {
+            ++indeg[p[0]];
+            postReqs[p[1]].push_back(p[0]);
+        }
+        vector<int> res;
+        list<int> queue;
+        for (int i = 0; i < indeg.size(); ++i) {
+            if (indeg[i] == 0) {
+                queue.push_back(i);
+                res.push_back(i);
+            }
+        }
+
+        while (!queue.empty()) {
+            vector<int> removeInNodeFrom = postReqs[queue.front()];
+            queue.pop_front();
+            for (int i : removeInNodeFrom) {
+                --indeg[i];
+                if (indeg[i] == 0) {
+                    queue.push_back(i);
+                    res.push_back(i);
+                }
+            }
+        }
+        for (int i : indeg) if (i != 0) return {};
+        return res;
+    }
+};
+
 #include <vector>
 #include <list> 
 #include <unordered_map>

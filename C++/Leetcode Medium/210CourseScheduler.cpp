@@ -1,5 +1,6 @@
-#include <unordered_map>
 #include <vector>
+#include <list>
+using namespace std;
 class Solution {
 public:
     vector<int> findOrder(int numCourses, vector<vector<int>>& prerequisites) {
@@ -19,7 +20,7 @@ public:
         }
 
         while (!queue.empty()) {
-            vector<int> removeInNodeFrom = postReqs[queue.front()];
+            vector<int>& removeInNodeFrom = postReqs[queue.front()];
             queue.pop_front();
             for (int i : removeInNodeFrom) {
                 --indeg[i];
@@ -29,8 +30,8 @@ public:
                 }
             }
         }
-        for (int i : indeg) if (i != 0) return {};
-        return res;
+        if (res.size() == numCourses) return res;
+        return {};
     }
 };
 

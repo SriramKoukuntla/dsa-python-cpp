@@ -33,21 +33,13 @@ public:
     }
     
     void put(int key, int value) {
-        ListNodeE* Node;
-        if (map.find(key) != map.end()) extractNode(key);
-        else Node = new ListNodeE(value, key);
-        map[key] = Node;
-        pushToBackOfQueue(Node);
+        if (map.find(key) != map.end()) removeNode(key);
+        map[key] = new ListNodeE(value, key);
+        pushToBackOfQueue(map[key]);
         if (map.size() > cap) removeNode(front->next->key);
     }
 
 private: 
-    ListNodeE* extractNode(int key) {
-        ListNodeE* node = map[key];
-        node->prev->next = node->next;
-        node->next->prev = node->prev;
-        return node;
-    }
     void removeNode(int key) {
         ListNodeE* node = map[key];
         node->prev->next = node->next;

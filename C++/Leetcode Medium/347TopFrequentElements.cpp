@@ -1,4 +1,29 @@
 #include <unordered_map>
+#include <vector>
+#include <utility>
+using namespace std;
+class Solution {
+public:
+    vector<int> topKFrequent(vector<int>& nums, int k) {
+        unordered_map<int, int> count;
+        for(int num : nums) ++count[num];
+
+        vector<vector<int>> temp(nums.size());
+        for (pair<int, int> p : count) temp[p.second-1].push_back(p.first);
+
+        vector<int> res;
+        for (int i = temp.size()-1; i >= 0; --i) {
+            vector<int> curr = temp[i];
+            for (int num : curr) {
+                res.push_back(num);
+                if (res.size() == k) return res;
+            }
+        }
+        return {};
+    }
+};
+
+#include <unordered_map>
 #include <queue>
 #include <functional>
 using namespace std;

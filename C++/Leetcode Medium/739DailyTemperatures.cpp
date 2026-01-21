@@ -1,3 +1,23 @@
+#include <vector>
+using namespace std;
+class Solution {
+public:
+    vector<int> dailyTemperatures(vector<int>& temperatures) {
+        //[73,74,75,71,69,72,76,73]
+        //[<76, 6>, <72, 5>, <71, 3>]
+        //[...,2, 1, 1, 0, 0]
+        vector<pair<int, int>> stack; //Temp, index
+        vector<int> res(temperatures.size());
+        for (int i = temperatures.size()-1; i >= 0; --i) {
+            while (!stack.empty() && temperatures[i] >= stack.back().first) stack.pop_back();
+            stack.push_back({temperatures[i], i});
+            if (stack.size() == 1) res[i] = 0;
+            else res[i] = stack[stack.size()-2].second-i;
+        }
+        return res;
+    }
+};
+
 #include <vector> 
 using namespace std;
 class Solution {

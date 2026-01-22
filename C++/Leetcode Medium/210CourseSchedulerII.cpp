@@ -1,4 +1,48 @@
 #include <vector>
+#include <list> 
+using namespace std;
+class Solution {
+public:
+    vector<int> findOrder(int numCourses, vector<vector<int>>& prerequisites) {
+        vector<int> indeg(numCourses, 0); //course, number of immediate prereqs
+        vector<vector<int>> postReq(numCourses, vector<int>());//Courses that need this course
+        for (vector<int>& p : prerequisites) {
+            ++indeg[p[0]];
+            postReq[p[1]].push_back(p[0]);
+        }
+
+        list<int> starting;
+        vector<int> res;
+        for(int i = 0; i < numCourses; ++i) {
+            if (indeg[i] == 0) {
+                starting.push_back(i);
+                res.push_back(i);
+            }
+        }
+
+        unordered_set<int> visiting;
+        while (!starting.empty()) {
+            int curr = starting.front();
+            if (visiting.find(curr) != visiting.end()) return {};
+            visiting.insert(curr);
+            starting.pop_front();
+            for (int courseToRemove : postReq[curr]) {
+                --indeg[courseToRemove];
+                if (indeg[courseToRemove] == 0) {
+                    starting.push_back(courseToRemove);
+                    res.push_back(courseToRemove);
+                    visiting.erase(courseToRemove);
+                }
+            }
+        }
+
+
+        for (int i : indeg) if(i!=0) return {};
+        return res;
+    }
+};
+
+#include <vector>
 #include <list>
 using namespace std;
 class Solution {

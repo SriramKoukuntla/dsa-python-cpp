@@ -1,3 +1,18 @@
+#include <vector>
+using namespace std;
+class Solution {
+public:
+    vector<int> smallerNumbersThanCurrent(vector<int>& nums) {
+        vector<int> counting(101, 0); 
+        for (int n : nums) ++counting[n];
+        vector<int> prefixSum(101, 0);
+        for (int i = 1; i < counting.size(); ++i) prefixSum[i] += (prefixSum[i-1] + counting[i-1]);
+        for (int i = 0; i < nums.size(); ++i) nums[i] = prefixSum[nums[i]];
+        return nums;
+    }
+};
+
+
 #include <vector> 
 #include <algorithm> 
 #include <unordered_map>

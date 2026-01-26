@@ -1,3 +1,16 @@
+#include <unordered_set> 
+class Solution {
+public:
+    bool containsDuplicate(vector<int>& nums) {
+        unordered_set<int> set;
+        for (int n : nums) {
+            if (set.find(n) != set.end()) return true;
+            set.insert(n);
+        }
+        return false;
+    }
+};
+
 //Redid (1/9/2026)
 #include <vector>
 #include <unordered_set>

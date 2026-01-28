@@ -1,4 +1,45 @@
 #include <vector>
+using namespace std;
+class Solution {
+public:
+    vector<int> spiralOrder(vector<vector<int>>& matrix) {
+        int leftB = 0;
+        int rightB = matrix[0].size()-1;
+        int upB = 0;
+        int downB = matrix.size()-1;
+
+        vector<int> res;
+
+        while (leftB <= rightB && upB <= downB) {
+            for (int j = leftB; j <= rightB; ++j){
+                res.push_back(matrix[upB][j]);
+            }
+            ++upB;
+
+            for (int i = upB; i <= downB; ++i) {
+                res.push_back(matrix[i][rightB]);
+            }
+            --rightB;
+
+            if (upB <= downB) {
+                for (int j = rightB; j >= leftB; --j) {
+                    res.push_back(matrix[downB][j]);
+                }
+                --downB;
+            }
+
+            if (leftB <= rightB) {
+                for (int i = downB; i >= upB; --i) {
+                    res.push_back(matrix[i][leftB]);
+                }
+                ++leftB;
+            }
+        }
+        return res;
+    }
+};
+
+#include <vector>
 #include <utility>
 using namespace std;
 class Solution {

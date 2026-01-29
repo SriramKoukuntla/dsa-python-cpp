@@ -1,4 +1,25 @@
 #include <vector>
+using namespace std;
+class Solution {
+public:
+    bool isValid(string s) {
+        vector<char> stack;
+        for (char c : s) {
+            if (c == '(' || c == '[' || c == '{') stack.push_back(c);
+            else {
+                if (stack.empty()) return false;
+                else if (c == ')' && stack.back() != '(') return false;
+                else if (c == ']' && stack.back() != '[') return false;
+                else if (c == '}' && stack.back() != '{') return false;
+                stack.pop_back();
+            }
+        }
+        if (stack.empty()) return true;
+        else return false;
+    }
+};
+
+#include <vector>
 #include <string>
 using namespace std;
 

@@ -19,7 +19,7 @@ unordered_map<int, int> djkstraAlgorithm(vector<vector<int>> edges, int starting
     //Core algorithm
     while (!pq.empty()) {
         //Get Current Node in pq
-        int currDist = pq.top().first;
+        int currDist = pq.top().first;  
         int currNode = pq.top().second;
         pq.pop();
         

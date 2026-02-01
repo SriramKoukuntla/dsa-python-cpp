@@ -1,3 +1,4 @@
+//For finding number of connected components
 #include <vector>
 using namespace std;
 int UnionFindAlgorithm(vector<vector<int>> edges, int n) {

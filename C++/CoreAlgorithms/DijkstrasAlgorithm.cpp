@@ -5,7 +5,7 @@
 #include <functional>
 using namespace std;
 
-
+//Dijkstra's algorithm is for finding the length of the shortest path from one node to all other nodes assuming edge weights >= 0
 //Input: Vector of edges: {node1, node2, weight}
 //Output: Map of shortest path from node1 to node2 (key = node dst, val = shortest path length)
 unordered_map<int, int> djkstraAlgorithm(vector<vector<int>> edges, int starting) {

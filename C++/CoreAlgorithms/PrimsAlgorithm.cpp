@@ -1,3 +1,4 @@
+//Prim's Algorithm is for finding the sum of all the weights for the minimum spanning tree of a graph
 #include <vector>
 #include <unordered_map>
 #include <utility>

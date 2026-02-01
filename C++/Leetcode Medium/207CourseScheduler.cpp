@@ -1,4 +1,29 @@
 #include <vector>
+#include <list>
+class Solution {
+public:
+    bool canFinish(int numCourses, vector<vector<int>>& prerequisites) {
+        vector<vector<int>> outGoingEdges(numCourses, vector<int>());
+        vector<int> indegree(numCourses, 0);
+        for (vector<int>& preReq : prerequisites) {
+            outGoingEdges[preReq[1]].push_back(preReq[0]);
+            ++indegree[preReq[0]];
+        }
+
+        list<int> queue;
+        for (int i = 0; i < indegree.size(); ++i) if (indegree[i] == 0) queue.push_back(i);
+
+        while (!queue.empty()) {
+            int curr = queue.front();
+            queue.pop_front();
+            for (int node : outGoingEdges[curr]) if (--indegree[node] == 0) queue.push_back(node);
+        }
+        for (int i : indegree) if (i != 0) return false;
+        return true;
+    }
+};
+
+#include <vector>
 #include <unordered_map>
 #include <unordered_set>
 using namespace std;

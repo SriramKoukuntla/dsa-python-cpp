@@ -1,3 +1,38 @@
+//DFS + DP
+class Solution {
+public:
+    int findTargetSumWays(vector<int>& nums, int target) {
+        int sum = 0;
+        for (int num : nums) sum += num;
+        vector<vector<int>> mem(nums.size(), vector<int>(sum+sum+1, -1));
+        return helper(nums, target, 0, 0, mem, sum);   
+    }
+
+    int helper(vector<int>& nums, int target, int i, int currSum, vector<vector<int>>& mem, int sum) {
+        if (i >= nums.size()) return (currSum == target) ? 1 : 0;
+        if (mem[i][currSum + sum] != -1) return mem[i][currSum + sum];
+        int add = helper(nums, target, i+1, currSum + nums[i], mem, sum);
+        int subtract = helper(nums, target, i+1, currSum - nums[i], mem, sum);
+        mem[i][currSum + sum] = add+subtract;
+        return add+subtract;
+    }
+};
+
+//Normal Dfs
+class Solution {
+public:
+    int findTargetSumWays(vector<int>& nums, int target) {
+        return helper(nums, target, 0, 0);   
+    }
+
+    int helper(vector<int>& nums, int target, int i, int currSum) {
+        if (i >= nums.size()) return (currSum == target) ? 1 : 0;
+        int add = helper(nums, target, i+1, currSum + nums[i]);
+        int subtract = helper(nums, target, i+1, currSum - nums[i]);
+        return add+subtract;
+    }
+};
+
 //Caching DFS
 #include <unordered_map>
 #include <vector>

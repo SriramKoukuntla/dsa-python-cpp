@@ -3,32 +3,34 @@
 #include <vector>
 #include <iostream>
 #include <algorithm>
+#include <string>
 using namespace std;
+
+// if a comma is contained within a filed then that field must be enclosed in double quotes
+//if a double quote is contained within a field then, that field must be enclosed in double quotes
 
 vector<string> extractElement(string& s) {
     vector<string> res;
-    string curr = "";
     int i = 0;
     while (i < s.size()) {
+        string curr = "";
         if (s[i] != '"') {
-            while (i != s.size() && s[i] != ',') curr += s[i++];
+            while (i < s.size() && s[i] != ',') {
+                if (s[i] == '"' && s[i+1] == '"') ++i;
+                curr += s[i++];
+            }
             ++i;
         }
         else {
             ++i;
-            while (!(i == s.size() && s[i-1] == '"') && 
-            !(s[i] == ',' && s[i-1] == '"')) {
-                if (s[i] == '"' && s[i+1] == '"') {
-                    curr += s[i];
-                    i += 2;
-                }
+            while (i < s.size() && !(s[i] == ',' && s[i-1] == '"')) {
+                if (s[i] == '"' && s[i+1] == '"') ++i;
                 curr += s[i++];
             }
-            curr.pop_back();
             ++i;
+            curr.pop_back();
         }
         res.push_back(curr);
-        curr = "";    
     }
     return res;
 }

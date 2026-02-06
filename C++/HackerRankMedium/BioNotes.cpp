@@ -1,3 +1,7 @@
+#include <vector>
+#include <string>
+#include <iostream>
+using namespace std;
 vector<string> extractElement(string& s) {
     vector<string> res;
     int i = 0;

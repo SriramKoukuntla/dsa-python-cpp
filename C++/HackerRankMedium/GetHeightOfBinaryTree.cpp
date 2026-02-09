@@ -1,3 +1,72 @@
+#include <cmath>
+#include <cstdio>
+#include <vector>
+#include <iostream>
+#include <algorithm>
+#include <list>
+using namespace std;
+
+class Node {
+public:
+    int val = 0;
+    Node* left = nullptr;
+    Node* right = nullptr;
+    Node(int v) : val(v) {};
+};
+
+int main() {
+    //Parse input
+    string numNodesStr = "";
+    getline(cin, numNodesStr);
+    
+    string nodes = "";
+    getline(cin, nodes);
+    
+    vector<int> input;
+    int i = 0;
+    while (i < nodes.size()) {
+        string temp = "";
+        while (i < nodes.size() && nodes[i] != ' ') temp += nodes[i++];
+        ++i;
+        input.push_back(stoi(temp));
+    }
+    
+    //Create tree
+    Node* root = new Node(input[0]);
+    for (int i = 1; i < input.size(); ++i) {
+        int currVal = input[i];
+        Node* curr = root;
+        while (true) {
+            if (currVal <= curr->val) {
+                if (curr->left) curr = curr->left;
+                else {curr->left = new Node(currVal); break;}
+            }
+            else if (currVal > curr->val) {
+                if (curr->right) curr = curr->right;
+                else {curr->right = new Node(currVal); break;}
+            }   
+        }
+    }
+    
+    //BFS to count nodes
+    list<Node*> queue = {root};
+    int res = -1;
+    while (!queue.empty()) {
+        int n = queue.size();
+        for (int i = 0; i < n; ++i) {
+            Node* curr = queue.front();
+            queue.pop_front();
+            if (curr->left) queue.push_back(curr->left);
+            if (curr->right) queue.push_back(curr->right);
+        }
+        ++res;
+    }
+    
+    cout << res;    
+    return 0;
+}
+
+
 #include <string>
 #include <vector>
 #include <iostream>

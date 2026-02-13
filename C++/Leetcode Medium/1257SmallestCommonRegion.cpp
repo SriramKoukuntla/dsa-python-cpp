@@ -17,6 +17,8 @@ public:
         }
 
         //Check if node on the path to root from region2 is in region1 to root path
-        for (string curr = region2; ;curr=smallToBig[curr]) if (region1ToRootPath.find(curr) != region1ToRootPath.end()) return curr;
+        string curr = region2;
+        while (region1ToRootPath.find(curr) == region1ToRootPath.end()) curr = smallToBig[curr];
+        return curr;
     }
 };

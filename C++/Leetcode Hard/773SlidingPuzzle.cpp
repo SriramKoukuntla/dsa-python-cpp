@@ -1,3 +1,52 @@
+#include <string>
+#include <list>
+using namespace std;
+class Solution {
+public:
+    int slidingPuzzle(vector<vector<int>>& board) {
+        unordered_map<string, int> reachableStates;
+        string initialState = "123450";
+
+        list<pair<string, int>> queue = {{initialState, 0}};
+        while (!queue.empty()) {
+            auto [currState, moves] = queue.front();
+            queue.pop_front();
+
+            if (reachableStates.find(currState) == reachableStates.end()) reachableStates[currState] = moves;
+            else continue; 
+
+            int i = -1;
+            for (int j = 0; j < currState.size(); ++j) if (currState[j] == '0') {i = j; break;}
+
+            if (i != 0 && i != 3) { //Left Swap
+                swap(currState[i], currState[i-1]);
+                queue.push_back({currState, moves+1});
+                swap(currState[i], currState[i-1]);
+            }
+            if (i != 2 && i != 5) { //Right Swap
+                swap(currState[i], currState[i+1]);
+                queue.push_back({currState, moves+1});
+                swap(currState[i], currState[i+1]);      
+            }
+            if (i < 3) { //Up Swap
+                swap(currState[i], currState[i+3]);
+                queue.push_back({currState, moves+1});
+                swap(currState[i], currState[i+3]);  
+            }
+            if (i > 2) { //Down Swap
+                swap(currState[i], currState[i-3]);
+                queue.push_back({currState, moves+1});
+                swap(currState[i], currState[i-3]);  
+            }
+        }
+
+        string stringState;
+        for (vector<int>& half : board) for (int num : half) stringState += to_string(num);
+
+        return (reachableStates.find(stringState) == reachableStates.end()) ? -1 : reachableStates[stringState];
+    }
+};
+
 #include <vector>
 #include <string>
 #include <unordered_map>

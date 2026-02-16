@@ -1,3 +1,23 @@
+class Solution {
+public:
+    bool isValid(string s) {
+        vector<char> stack;
+        for (char c : s) {
+            if (c == '(' || c == '{' || c == '[') stack.push_back(c);
+            else {
+                if (stack.empty()) return false;
+                char last = stack.back();
+                stack.pop_back();
+                if (c == ')' && last == '(') continue;
+                if (c == ']' && last == '[') continue;
+                if (c == '}' && last == '{') continue;
+                return false;
+            }
+        }
+        return stack.empty();
+    }
+};
+
 #include <vector>
 using namespace std;
 class Solution {

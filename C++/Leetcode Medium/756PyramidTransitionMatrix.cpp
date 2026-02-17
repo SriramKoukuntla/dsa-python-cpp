@@ -1,3 +1,8 @@
+#include <vector>
+#include <unordered_set>
+#include <unordered_map>
+#include <string>
+using namespace std;
 class Solution {
 public:
     bool layerBuilder(string& bottom, string& curr, int i,  unordered_map<string, vector<char>>& allowedSet, unordered_map<string, bool>& mem) {

@@ -1,3 +1,21 @@
+class Solution {
+public:
+    bool isHappy(int n) {
+        unordered_set<int> seen;
+        int tempN = 0;
+        while (n != 1) {
+            if (seen.find(n) != seen.end()) return false;
+            seen.insert(n);
+            while (n != 0) {
+                tempN += pow(n%10, 2);
+                n /= 10;
+            }
+            swap(n, tempN);
+        }
+        return true;
+    }
+};
+
 #include <unordered_set>
 #include <cmath> 
 using namespace std;

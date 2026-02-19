@@ -1,3 +1,50 @@
+class Solution {
+public:
+    vector<string> fullJustify(vector<string>& words, int maxWidth) {
+        vector<string> res; 
+        int z = 0;
+        while (true) {
+            int numChars = 0;
+            vector<string> currLineVector;
+            while (z < words.size() && numChars + currLineVector.size() + words[z].size() <= maxWidth) {
+                currLineVector.push_back(words[z]);
+                numChars += words[z].size();
+                ++z;
+            }
+
+            int numGaps = currLineVector.size()-1;
+            //Last Line
+            if (numGaps == 0 || z == words.size()) {
+                string currLineString = currLineVector[0];
+                for (int i = 1; i < currLineVector.size(); ++i) {
+                    currLineString += " ";
+                    currLineString += currLineVector[i];
+                }
+                int totalWhiteSpaceAfterLastWord = maxWidth-currLineString.size();
+                for (int i = 0; i < totalWhiteSpaceAfterLastWord; ++i) currLineString += " ";
+                res.push_back(currLineString);
+            }
+            else {
+                string currLineString = currLineVector[0];
+                int totalWhiteSpace = maxWidth - numChars;
+                int whiteSpacePerSpace = totalWhiteSpace / (max(1, (int)currLineVector.size()-1));
+                int whiteSpaceRemainder = totalWhiteSpace % (max(1, (int)currLineVector.size()-1));
+
+                for (int i = 1; i < currLineVector.size(); ++i) {
+                    for (int j = 0; j < whiteSpacePerSpace; ++j) currLineString += " ";
+                    if (whiteSpaceRemainder-- > 0) currLineString += " ";
+                    currLineString += currLineVector[i];
+                }
+
+                res.push_back(currLineString);
+            }
+            if (z == words.size()) break;
+        }
+        return res; 
+    }
+};
+
+
 #include <vector>
 #include <string>
 using namespace std;

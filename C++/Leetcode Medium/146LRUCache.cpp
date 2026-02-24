@@ -1,3 +1,75 @@
+class Node {
+public: 
+    int val;
+    int key;
+    Node* next = nullptr;
+    Node* prev = nullptr;
+    Node(int val, int key) {
+        this->val = val;
+        this->key = key;
+    }
+};
+
+class LRUCache {
+public: 
+    int capacity;
+    int currSize = 0;
+    Node* front = new Node(-1, -1);
+    Node* back = new Node(-1, -1);
+
+    unordered_map<int, Node*> map;
+
+    LRUCache(int capacity) {
+        this->capacity = capacity;
+        front->next = back;
+        back->prev = front;
+    }
+    
+    int get(int key) {
+        if (map.find(key) == map.end()) return -1;
+        moveToFront(map[key]);
+        return map[key]->val;
+    }
+
+    void put(int key, int value){
+        if (map.find(key) != map.end()) {
+            map[key]->val = value;
+            moveToFront(map[key]);
+        }
+        else {
+            Node* newNode = new Node(value, key);
+            map[key] = newNode;
+            moveToFront(newNode);
+            if (++currSize > capacity) {
+                map.erase(back->prev->key);
+                removeFromBack(); 
+                --currSize;
+            }
+        }
+    }
+
+private: 
+    void moveToFront(Node* currNode) {
+        //Removing current connections
+        if (currNode->prev) currNode->prev->next = currNode->next;
+        if (currNode->next) currNode->next->prev = currNode->prev;
+        //Set currNode connections
+        currNode->prev = front;
+        currNode->next = front->next;
+        //Updating front connections
+        front->next->prev = currNode;
+        front->next = currNode;
+    }
+    void removeFromBack() {
+        Node* currNode = back->prev;
+        //Remove currentConnections
+        currNode->prev->next = currNode->next;
+        currNode->next->prev = currNode->prev;
+        //Delete from memory
+        delete currNode;
+    }
+};
+
 #include <unordered_map>
 using namespace std;
 
@@ -7,6 +79,12 @@ public:
     int key = -1;
     ListNodeE* next = nullptr;
     ListNodeE* prev = nullptr;
+    ListNodeE(){}
+};
+
+
+class ListNodeE {
+public:
     ListNodeE(){}
 };
 class LRUCache {

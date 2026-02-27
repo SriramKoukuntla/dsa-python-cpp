@@ -1,6 +1,35 @@
 class Solution {
 public:
     string longestPalindrome(string s) {
+        //preprocess s
+        string sPrime;
+        for (int i = 0; i < (int)s.size(); ++i) sPrime += (i == 0) ? "*" + string(1, s[i]) + "*" : string(1, s[i]) + "*";
+
+        vector<int> radius(sPrime.size(), 0);
+        int c = 0;
+        int r = 0;
+        int resIPrime = 0;
+        int maxRadius = 0;
+
+        for (int i = 0; i < (int)sPrime.size(); ++i) {
+            int mirrorIdx = c - (i-c);
+            if (i < r) radius[i] = min(radius[mirrorIdx], r-i);
+            while (i-radius[i]-1 >= 0 && i+radius[i]+1 < sPrime.size() &&  sPrime[i-radius[i]-1] == sPrime[i+radius[i]+1]) ++radius[i];
+            if (radius[i] > maxRadius) {
+                maxRadius = radius[i];
+                resIPrime = i;
+            }
+        }
+
+        int resCenter = resIPrime / 2;
+        int start = resCenter - (maxRadius / 2);
+        return s.substr(start, maxRadius);
+    }
+};
+
+class Solution {
+public:
+    string longestPalindrome(string s) {
         //Preprocessing string s
         string sPrime;
         for (int i = 0; i < s.size(); ++i) sPrime += (i == 0) ? "*" + string(1, s[i]) + "*" : string(1, s[i]) + "*";

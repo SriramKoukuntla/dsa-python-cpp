@@ -1,3 +1,39 @@
+#include <utility>
+using namespace std;
+
+struct TreeNode {
+    int val;
+    TreeNode *left;
+    TreeNode *right;
+    TreeNode() : val(0), left(nullptr), right(nullptr) {}
+    TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
+    TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
+};
+
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode() : val(0), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
+ * };
+ */
+class Solution {
+public:
+    bool helper(TreeNode* currNode, long long leftBoundary, long long rightBoundary) {
+        if (currNode->val <= leftBoundary || currNode->val >= rightBoundary) return false;
+        if (currNode->left) if (!helper(currNode->left, leftBoundary, currNode->val)) return false;
+        if (currNode->right) if (!helper(currNode->right, currNode->val, rightBoundary)) return false;
+        return true;
+    }
+
+    bool isValidBST(TreeNode* root) {
+        return helper(root, LLONG_MIN, LLONG_MAX);
+    }
+};
 /**
  * Definition for a binary tree node.
  * struct TreeNode {

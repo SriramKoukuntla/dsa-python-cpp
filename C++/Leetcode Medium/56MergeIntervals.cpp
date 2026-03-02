@@ -1,5 +1,29 @@
 #include <deque>
 #include <vector>
+using namespace std;
+class Solution {
+public:
+    vector<vector<int>> merge(vector<vector<int>>& intervals) {
+        sort(intervals.begin(), intervals.end());
+
+        vector<vector<int>> res;
+        vector<int> prevInterval = intervals[0];
+        for (int i = 1; i < intervals.size(); ++i) {
+            vector<int>& currInterval = intervals[i];
+            if (currInterval[0] <= prevInterval[1]) {
+                prevInterval[1] = max(prevInterval[1], currInterval[1]);
+            }
+            else {
+                res.push_back(prevInterval);
+                prevInterval = currInterval;
+            }
+        }
+        res.push_back(prevInterval);
+        return res;
+    }
+};
+
+
 
 class Solution {
 public:

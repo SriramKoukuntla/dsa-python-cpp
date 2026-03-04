@@ -1,3 +1,24 @@
+#include <utility>
+class Solution {
+public:
+    int findKthLargest(vector<int>& nums, int k) {
+        int smallestVal = INT_MAX;
+        int biggestVal = INT_MIN;
+        for (int num : nums) {
+            smallestVal = min(smallestVal, num);
+            biggestVal = max(biggestVal, num);
+        }
+
+        vector<int> buckets(1LL*biggestVal-smallestVal+1, 0);
+        for (int num : nums) ++buckets[1LL*num-smallestVal];
+        for (int i = buckets.size()-1; i >= 0; --i) {
+            k -= buckets[i];
+            if (k <= 0) return smallestVal + i;
+        }
+        return -1;
+    }
+};
+
 class Solution {
 public:
     int findKthLargest(vector<int>& nums, int k) {

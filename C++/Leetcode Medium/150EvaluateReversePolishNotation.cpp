@@ -1,3 +1,28 @@
+#include <stack>
+#include <string>
+using namespace std;
+class Solution {
+public:
+    int evalRPN(vector<string>& tokens) {
+        stack<int> st;
+
+        for (const string& token : tokens) {
+            if (token == "+" || token == "-" || token == "*" || token == "/") {
+                int secondNum = st.top(); st.pop();
+                int firstNum = st.top(); st.pop();
+                
+                if (token == "+") st.push(firstNum + secondNum);
+                else if (token == "-") st.push(firstNum - secondNum);
+                else if (token == "*") st.push(firstNum * secondNum);
+                else st.push(firstNum / secondNum);
+            } else {
+                st.push(stoi(token));
+            }
+        }
+        return st.top();
+    }
+};
+
 #include <vector>
 using namespace std;
 class Solution {

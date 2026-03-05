@@ -1,3 +1,35 @@
+class Solution {
+public:
+    int countSubarrays(vector<int>& nums, int k) {
+        //Transform array from nums-> to only having elements of -1, 0, 1
+        for (int& num : nums) num = (num < k) ? -1 : (num > k) ? 1 : 0;
+
+        //PrefixSum
+        vector<int> prefixSum;
+        for (int i = 0; i < nums.size(); ++i) prefixSum.push_back((i==0) ? nums[i] : nums[i] + prefixSum[i-1]);
+
+        //find k
+        int kIdx = -1;
+        unordered_map<int, int> prekIdxPrefixSumOcurrences;
+        ++prekIdxPrefixSumOcurrences[0];
+        for (int i = 0; i < nums.size(); ++i) {
+            if (nums[i] == 0) {kIdx = i; break;}
+            else ++prekIdxPrefixSumOcurrences[prefixSum[i]];
+        }
+
+        //Single iteration
+        int res = 0;
+        for (int i = kIdx; i < nums.size(); ++i) {
+            int currPrefixSum = prefixSum[i];
+            int target1 = 0;
+            int target2 = 1;
+            res += (prekIdxPrefixSumOcurrences[currPrefixSum-target1] + prekIdxPrefixSumOcurrences[currPrefixSum-target2]);
+        }
+
+        return res;
+    }
+};
+
 #include <vector>
 #include <unordered_map>
 using namespace std;

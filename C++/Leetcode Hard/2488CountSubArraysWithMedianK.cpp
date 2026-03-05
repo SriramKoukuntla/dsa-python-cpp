@@ -1,3 +1,37 @@
+class Solution {
+public:
+    int countSubarrays(vector<int>& nums, int k) {
+        //Transform orginal nums array into modified array that only includes -1, 0, 1
+        for (int& num : nums) num = (num < k) ? -1 : (num > k) ? 1 : 0;
+
+        //Create prefixSum
+        vector<int> prefixSum(nums.size(), 0);
+        for (int i = 0; i < prefixSum.size(); ++i) {
+            int currNum = nums[i];
+            int prevPrefixSum = (i == 0) ? 0 : prefixSum[i-1];
+            prefixSum[i] = currNum + prevPrefixSum;
+        }
+
+        //Find index of K
+        int idxK = -1;
+        for (int i = 0; i < nums.size(); ++i) if (nums[i] == 0) {idxK = i; break;}
+
+        //Store prefixSum occurrences from index K onwards;
+        unordered_map<int, int> prefixSumOccurrencesKOnwards;
+        for (int i = idxK; i < nums.size(); ++i) ++prefixSumOccurrencesKOnwards[prefixSum[i]];
+
+        //Calculate sum of each subset (i, j) where k is included
+        int res = 0;
+        for (int i = 0; i <= idxK; ++i) {
+            int prefixSumIMinusOne = (i==0) ? 0 : prefixSum[i-1];
+            res += prefixSumOccurrencesKOnwards[prefixSumIMinusOne] + prefixSumOccurrencesKOnwards[prefixSumIMinusOne+1];;
+        }
+
+        //Return res
+        return res; 
+    }
+};
+
 #include <vector>
 using namespace std;
 class Solution {
@@ -24,8 +58,8 @@ public:
         int res = 0;
         for (int i = 0; i <= idxK; ++i) {
             int prefixSumI = (i-1 < 0) ? 0 : prefixSum[i-1];
-            int occurrances = prefixSumFreqKOnwards[prefixSumI] + prefixSumFreqKOnwards[prefixSumI+1];
-            res += occurrances;
+            int occurrences = prefixSumFreqKOnwards[prefixSumI] + prefixSumFreqKOnwards[prefixSumI+1];
+            res += occurrences;
         }
         return res; 
     }

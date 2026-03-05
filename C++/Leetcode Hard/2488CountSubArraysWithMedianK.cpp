@@ -1,3 +1,36 @@
+#include <vector>
+using namespace std;
+class Solution {
+public:
+    int countSubarrays(vector<int>& nums, int k) {
+        //Transform nums to elements with only -1, 0, 1
+        for (int& num : nums) num = (num < k) ? -1 : (num > k) ? 1 : 0;
+
+        //Create prefixSum
+        vector<int> prefixSum(nums.size(), 0);
+        for (int i = 0; i < nums.size(); ++i) prefixSum[i] = (i==0) ? nums[i] : nums[i] + prefixSum[i-1];
+
+        //Find index of K
+        int idxK = -1;
+        for (int i = 0; i < nums.size(); ++i) if (nums[i] == 0) idxK = i;
+
+        //store number of occurrences of each prefixSum after J
+        unordered_map<int, int> prefixSumFreqKOnwards;
+        for (int i = idxK; i < nums.size(); ++i) ++prefixSumFreqKOnwards[prefixSum[i]];
+
+        //Iterations
+        //sum(i, j) is sum of subset of elements from i to j
+        //Iterate over for every i that is less than or equal to idxK for every j that is greater than or equal to idkK
+        int res = 0;
+        for (int i = 0; i <= idxK; ++i) {
+            int prefixSumI = (i-1 < 0) ? 0 : prefixSum[i-1];
+            int occurrances = prefixSumFreqKOnwards[prefixSumI] + prefixSumFreqKOnwards[prefixSumI+1];
+            res += occurrances;
+        }
+        return res; 
+    }
+};
+
 class Solution {
 public:
     int countSubarrays(vector<int>& nums, int k) {

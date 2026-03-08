@@ -1,6 +1,29 @@
 class Solution {
 public:
     bool canJump(vector<int>& nums) {
+        //From the current position
+        //Find the best location to go to for the furthest range
+        //Go to that position
+        int currPos = 0;
+        while (true) {
+            if (currPos == nums.size()-1) return true;
+            int nextPos = -1;
+            int range = currPos;
+            for (int i = 1; i <= nums[currPos] && currPos+i < nums.size(); ++i) {
+                if (currPos + i + nums[currPos+i] > range) {
+                    nextPos = currPos+i;
+                    range = currPos + i + nums[currPos+i];
+                }
+            }
+            if (nextPos == -1) return false;
+            currPos = nextPos;
+        }
+    }
+};
+
+class Solution {
+public:
+    bool canJump(vector<int>& nums) {
         int range = 0;
         for (int i = 0; i < nums.size(); ++i) {
             if (i > range) return false;

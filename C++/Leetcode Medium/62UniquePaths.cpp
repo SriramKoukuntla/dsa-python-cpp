@@ -1,3 +1,5 @@
+#include <unordered_map>
+using namespace std;
 class Solution {
 public:
     int helper(int i, int j, unordered_map<int, int>& mem) {

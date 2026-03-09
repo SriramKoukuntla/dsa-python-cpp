@@ -11,6 +11,59 @@
 class Solution {
 public:
     void reorderList(ListNode* head) {
+        //Identify length of list
+        int length = 0;
+        for (ListNode* curr = head; curr; curr = curr->next) ++length;
+        if (length == 1) return;
+
+        //Reach the end of the first half and the start of the second half
+        ListNode* endOfFirstHalf = head;
+        ListNode* startOfSecondHalf = head; 
+        for (int i = 0; i < (length/2)-1; ++i) endOfFirstHalf = endOfFirstHalf->next;
+        for (int i = 0; i < length/2; ++i) startOfSecondHalf = startOfSecondHalf->next;
+
+        //Make end of first half point to nothing
+        endOfFirstHalf->next = nullptr;
+
+        //Reverse startOfSecondHalf list
+        ListNode* prev = nullptr;
+        while (startOfSecondHalf) {
+            ListNode* next = startOfSecondHalf->next;
+            startOfSecondHalf->next = prev;
+            prev = startOfSecondHalf;
+            startOfSecondHalf = next;
+        }
+
+        //Combine both lists
+        ListNode* dummyHead = new ListNode();
+        ListNode* list1 = head;
+        ListNode* list2 = prev;
+        ListNode* curr = dummyHead;
+
+        while (list1 && list2) {
+            curr->next = list1;
+            curr = curr->next;
+            list1 = list1->next;
+            curr->next = list2;
+            curr = curr->next;
+            list2 = list2->next;
+        }
+        if (list1) curr->next = list1;
+
+        delete dummyHead;
+    }
+};
+
+struct ListNode {
+    int val;
+    ListNode *next;
+    ListNode() : val(0), next(nullptr) {}
+    ListNode(int x) : val(x), next(nullptr) {}
+    ListNode(int x, ListNode *next) : val(x), next(next) {}
+};
+class Solution {
+public:
+    void reorderList(ListNode* head) {
         ListNode* fast = head;
         ListNode* slow = head;
         while (fast->next && fast->next->next) {

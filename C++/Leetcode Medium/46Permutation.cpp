@@ -1,3 +1,28 @@
+class Solution {
+public:
+    vector<vector<int>> helper(vector<int>& nums, int idx) {
+        if (idx == nums.size()-1) return {{nums[idx]}};
+        int firstNumber = nums[idx];
+        const vector<vector<int>>& subproblemPermutations = helper(nums, idx+1);    
+        vector<vector<int>> res;
+        for (int i = 0; i < subproblemPermutations.size(); ++i) {
+            vector<int> subproblemPermutation = subproblemPermutations[i];
+            for (int j = 0; j <= subproblemPermutation.size(); ++j) {
+                vector<int> tempPermutation(subproblemPermutation.begin(), subproblemPermutation.begin()+j);
+                tempPermutation.push_back(firstNumber);
+                tempPermutation.insert(tempPermutation.end(), subproblemPermutation.begin()+j, subproblemPermutation.end());
+                res.push_back(tempPermutation);
+            }
+        }
+        return res;
+    }
+
+    vector<vector<int>> permute(vector<int>& nums) {
+        return helper(nums, 0);
+    }
+};
+
+
 #include <vector>
 #include <unordered_set>
 using namespace std;

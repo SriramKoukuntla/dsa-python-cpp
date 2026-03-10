@@ -1,3 +1,35 @@
+class Solution {
+public:
+    int longestSubstring(string s, int k) {
+        //Find out how many unique characters are in s
+        unordered_set<char> set;
+        for (char c : s) set.insert(c);
+        int totalUniqueChars = set.size();
+
+        //Iterate once for every unique character
+        int res = 0;
+        for (int targetUniqueChar = 1; targetUniqueChar <= totalUniqueChars; ++targetUniqueChar) {
+            vector<int> windowFreq(26, 0);
+            int currUniqueChar = 0;
+            int currUniqueCharAtleastK = 0;
+            int l = 0;
+            for (int r = 0; r < s.size(); ++r) {
+                if (++windowFreq[s[r]-'a'] == 1) ++currUniqueChar;
+                if (windowFreq[s[r]-'a'] == k) ++currUniqueCharAtleastK;
+
+                while (currUniqueChar > targetUniqueChar) {
+                    if (windowFreq[s[l]-'a'] == k) --currUniqueCharAtleastK;
+                    if (--windowFreq[s[l]-'a'] == 0) --currUniqueChar;
+                    ++l;
+                }
+                if (currUniqueChar == targetUniqueChar && currUniqueCharAtleastK == currUniqueChar) res = max(res, r-l+1);
+            }
+        }
+        return res;
+    }
+};
+
+
 #include <vector>
 #include <string>
 #include <algorithm>

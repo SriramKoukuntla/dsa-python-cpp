@@ -1,3 +1,29 @@
+#include <vector>
+using namespace std;
+class Solution {
+public:
+    void helper(vector<vector<int>>& matrix, int l, int r, int u, int d) {
+        if (r <= l) return; // base case
+
+        vector<int> temp;
+        int numIterations = r-l;
+
+        for (int i = 0; i < numIterations; ++i) temp.push_back(matrix[u][l+i]); //Grabbing top values
+        for (int i = 0; i < numIterations; ++i) swap(temp[i], matrix[u+i][r]); //Swapping right values for top values
+        for (int i = 0; i < numIterations; ++i) swap(temp[i], matrix[d][r-i]); //Swapping down values for right values
+        for (int i = 0; i < numIterations; ++i) swap(temp[i], matrix[d-i][l]); //Swapping left values for down values
+        for (int i = 0; i < numIterations; ++i) swap(temp[i], matrix[u][l+i]); //Swapping up values for left values
+
+        helper(matrix, l+1, r-1, u+1, d-1);
+    }
+
+
+    void rotate(vector<vector<int>>& matrix) {
+        helper(matrix, 0, matrix.size()-1, 0, matrix.size()-1);
+    }
+};
+
+
 class Solution {
 public:
     void rotate(vector<vector<int>>& matrix) {

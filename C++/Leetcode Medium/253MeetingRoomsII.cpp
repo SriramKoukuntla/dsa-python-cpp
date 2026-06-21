@@ -1,3 +1,25 @@
+class Solution {
+    public:
+        int minMeetingRooms(vector<vector<int>>& intervals) {
+            //Sort
+            sort(intervals.begin(), intervals.end());
+            //List of different conference last meeting time
+            vector<int> conferences = {0};
+    
+            for (auto interval : intervals) {
+                bool inserted = false;
+                for (int& currConference : conferences) {
+                    if (interval[0] >= currConference) {
+                        currConference = interval[1];
+                        inserted = true;
+                        break;
+                    }
+                }
+                if (!inserted) conferences.push_back(interval[1]);
+            }
+            return conferences.size();
+        }
+    };
 /**
  * Definition of Interval:
  * class Interval {

@@ -1,3 +1,32 @@
+#include <unordered_set>
+using namespace std;
+class Solution {
+public:
+    bool containsDuplicate(vector<int>& nums) {
+        unordered_set<int> set;
+        for (int num : nums) {
+            if (set.find(num) == set.end()) set.insert(num);
+            else return true;
+        }
+        return false;
+    }
+};
+
+#include <unordered_set>
+using namespace std;
+class Solution {
+public:
+    bool containsDuplicate(vector<int>& nums) {
+        unordered_set<int> set;
+        for (int i = 0; i < nums.size(); ++i) {
+            if (set.find(nums[i]) == set.end()) set.insert(nums[i]);
+            else return true;
+        }
+        return false;
+    }
+};
+
+
 class Solution {
 public:
     bool containsDuplicate(vector<int>& nums) {

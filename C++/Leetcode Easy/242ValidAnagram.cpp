@@ -1,3 +1,29 @@
+#include <unordered_map>
+using namespace std;
+class Solution {
+public:
+    bool isAnagram(string s, string t) {
+        unordered_map<char, int> map;
+        for (char c : s) ++map[c];
+        for (char c : t) --map[c];
+        for (auto [c, i] : map) if (i != 0) return false;
+        return true; 
+    }
+};
+
+#include <unordered_map>
+using namespace std;
+class Solution {
+public:
+    bool isAnagram(string s, string t) {
+        unordered_map<char, int> mapS;
+        unordered_map<char, int> mapT;
+        for (char c : s) mapS[c]++;
+        for (char c : t) mapT[c]++;
+        return mapS == mapT;
+    }
+};
+
 class Solution {
 public:
     bool isAnagram(string s, string t) {

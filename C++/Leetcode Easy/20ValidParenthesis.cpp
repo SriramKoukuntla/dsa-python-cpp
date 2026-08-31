@@ -1,3 +1,56 @@
+#include <string>
+#include <vector>
+using namespace std;
+class Solution {
+public:
+    bool isValid(string s) {
+        vector<char> stack;
+        for (char c : s) {
+            if (c == '(' || c == '{' || c == '[') {
+                stack.push_back(c); 
+                continue;
+            }
+            else {
+                if (stack.empty()) return false;
+                if (c == ')' && stack.back() != '(') return false; 
+                if (c == ']' && stack.back() != '[') return false; 
+                if (c == '}' && stack.back() != '{') return false; 
+                stack.pop_back();
+            }
+        }
+        return stack.empty();
+    }
+};
+
+#include <string>
+#include <vector>
+using namespace std;
+class Solution {
+public:
+    bool isValid(string s) {
+        vector<char> stack;
+        for (char c : s) {
+            if (c == '(' || c == '{' || c == '[') {
+                stack.push_back(c); 
+                continue;
+            }
+            if (stack.size() == 0) return false;
+            if (c == ')') {
+                if (stack.back() != '(') return false;
+                stack.pop_back();
+            }
+            else if (c == '}') {
+                if (stack.back() != '{') return false;
+                stack.pop_back();
+            }
+            else if (c == ']') {
+                if (stack.back() != '[') return false;
+                stack.pop_back();
+            }
+        }
+        return stack.empty();
+    }
+};
 class Solution {
 public:
     bool isValid(string s) {

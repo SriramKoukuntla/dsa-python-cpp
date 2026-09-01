@@ -1,3 +1,22 @@
+#include <unordered_set>
+#include <string>
+#include <algorithm>
+using namespace std;
+class Solution {
+public:
+    int lengthOfLongestSubstring(string s) {
+        int res = 0;
+        unordered_set<int> set;
+        int l = 0;
+        for (int r = 0; r < s.size(); ++r) {
+            while (set.find(s[r]) != set.end()) set.erase(s[l++]);
+            set.insert(s[r]);
+            res = max(res, (int)set.size());
+        }
+        return res;
+    }
+};
+
 class Solution {
 public:
     int lengthOfLongestSubstring(string s) {

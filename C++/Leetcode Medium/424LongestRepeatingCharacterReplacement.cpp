@@ -1,3 +1,33 @@
+#include <string>
+#include <unordered_map>
+using namespace std;
+class Solution {
+public:
+    int characterReplacement(string s, int k) {
+        unordered_map<char, int> map;
+        int l = 0;
+        int res = 0;
+        for (int r = 0; r < s.size(); ++r) {
+            ++map[s[r]];
+            while (!valid(map, k)) --map[s[l++]];
+            res = max(res, r-l+1);
+
+        }
+        return res; 
+    }
+
+    bool valid(unordered_map<char, int>& map, int k) {
+        int totalCount = 0;
+        int maxCountForSingleLetter = 0;
+        for (auto [c, i] : map) {
+            totalCount += i;
+            maxCountForSingleLetter = max(maxCountForSingleLetter, i);
+        }
+        return totalCount - maxCountForSingleLetter <= k;
+    }
+};
+
+
 #include <vector> 
 #include <algorithm>
 using namespace std;

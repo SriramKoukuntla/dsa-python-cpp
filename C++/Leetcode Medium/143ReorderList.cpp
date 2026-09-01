@@ -11,6 +11,58 @@
 class Solution {
 public:
     void reorderList(ListNode* head) {
+        //Separate lists
+        ListNode* slow = head;
+        ListNode* fast = head->next;
+        while (slow && fast && fast->next) {
+            slow = slow->next;
+            fast = fast->next->next;
+        }
+        ListNode* list1Head = head;
+        ListNode* list2Head = slow->next;
+        slow->next = nullptr;
+
+        //Reverse second list
+        ListNode* prev = nullptr;
+        ListNode* curr = list2Head;
+        while (curr) {
+            ListNode* next = curr->next;
+            curr->next = prev;
+            prev = curr;
+            curr = next;
+        }
+        list2Head = prev;
+
+        //Merge both lists
+        ListNode* list1Curr = list1Head;
+        ListNode* list2Curr = list2Head;
+        while (list1Curr && list2Curr) {
+            ListNode* list1Next = list1Curr->next;
+            ListNode* list2Next = list2Curr->next;
+
+            list1Curr->next = list2Curr;
+            list2Curr->next = list1Next;
+
+            list1Curr = list1Next;
+            list2Curr = list2Next;
+        }
+
+    }
+};
+
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode() : val(0), next(nullptr) {}
+ *     ListNode(int x) : val(x), next(nullptr) {}
+ *     ListNode(int x, ListNode *next) : val(x), next(next) {}
+ * };
+ */
+class Solution {
+public:
+    void reorderList(ListNode* head) {
         //Identify length of list
         int length = 0;
         for (ListNode* curr = head; curr; curr = curr->next) ++length;

@@ -15,6 +15,48 @@ using namespace std;
 class Solution {
 public:
     vector<int> postorderTraversal(TreeNode* root) {
+        vector<int> result;
+        stack<TreeNode*> sk;
+        stack<bool> visit;
+        sk.push(root);
+        visit.push(false);
+        while (!sk.empty()) {
+            TreeNode* curr = sk.top();
+            sk.pop();
+            bool visited = visit.top();
+            visit.pop();
+            if (!curr) continue;
+            if (visited) result.push_back(curr->val);
+            else {
+                sk.push(curr);
+                visit.push(true);
+                sk.push(curr->right);
+                visit.push(false);
+                sk.push(curr->left);
+                visit.push(false);
+            }
+        }
+        return result;
+    }
+};
+
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode() : val(0), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
+ * };
+ */
+#include <vector>
+#include <stack>
+using namespace std;
+class Solution {
+public:
+    vector<int> postorderTraversal(TreeNode* root) {
         vector<int> res;
         stack<TreeNode*> sk;
         stack<bool> visited;

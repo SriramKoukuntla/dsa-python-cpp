@@ -15,6 +15,41 @@ using namespace std;
 class Solution {
 public:
     vector<int> preorderTraversal(TreeNode* root) {
+        vector<int> result;
+        stack<TreeNode*> sk;
+        sk.push(root);
+
+        while (!sk.empty()) {
+            TreeNode* curr = sk.top();
+            sk.pop();
+            if (!curr) continue;
+
+            result.push_back(curr->val);
+            sk.push(curr->right);
+            sk.push(curr->left);
+        }
+        return result;
+
+    }
+};
+
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode() : val(0), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
+ * };
+ */
+#include <vector>
+#include <stack>
+using namespace std;
+class Solution {
+public:
+    vector<int> preorderTraversal(TreeNode* root) {
         vector<int> res;
         stack<TreeNode*> st;
         st.push(root);

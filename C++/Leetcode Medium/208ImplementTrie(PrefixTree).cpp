@@ -1,3 +1,54 @@
+#include <string>
+#include <unordered_map>
+using namespace std;
+class Node {
+public:
+    unordered_map<char, Node*> children;
+    bool endOfWord;
+    Node(bool endOfWord) {endOfWord = endOfWord;}
+};
+
+class Trie {
+public:
+    Node* root;
+    Trie() {root = new Node(false);}
+    
+    void insert(string word) {
+        Node* curr = root;
+        for (char c : word) {
+            if (curr->children.find(c) == curr->children.end()) curr->children[c] = new Node(false);
+            curr = curr->children[c];
+        }
+        curr->endOfWord = true;
+    }
+    
+    bool search(string word) {
+        Node* curr = root;
+        for (char c : word) {
+            if (curr->children.find(c) == curr->children.end()) return false;
+            curr = curr->children[c];
+        }
+        return curr->endOfWord;
+    }
+    
+    bool startsWith(string prefix) {
+        Node* curr = root;
+        for (char c : prefix) {
+            if (curr->children.find(c) == curr->children.end()) return false;
+            curr = curr->children[c];
+        }
+        return true;
+    }
+};
+
+/**
+ * Your Trie object will be instantiated and called as such:
+ * Trie* obj = new Trie();
+ * obj->insert(word);
+ * bool param_2 = obj->search(word);
+ * bool param_3 = obj->startsWith(prefix);
+ */
+ 
 #include <unordered_map>
 class Node {
 public:

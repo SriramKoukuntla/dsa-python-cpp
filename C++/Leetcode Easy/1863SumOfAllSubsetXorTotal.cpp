@@ -3,6 +3,30 @@ using namespace std;
 class Solution {
 public:
     int subsetXORSum(vector<int>& nums) {
+        vector<vector<int>> subsets = {{}};
+        for (int num : nums) {
+            int n = subsets.size();
+            for (int i = 0; i < n; ++i) {
+                vector<int> subset = subsets[i];
+                subset.push_back(num);
+                subsets.push_back(subset);
+            }
+        }
+        int res = 0;
+        for (vector<int>& subset : subsets) {
+            int temp = 0;
+            for (int item : subset) temp ^= item;
+            res += temp;
+        }
+        return res; 
+    }
+};
+
+#include <vector>
+using namespace std;
+class Solution {
+public:
+    int subsetXORSum(vector<int>& nums) {
         vector<vector<int>> subSets;
         vector<int> temp; 
         helper(nums, subSets, temp, 0);

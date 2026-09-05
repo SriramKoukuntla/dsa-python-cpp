@@ -3,6 +3,49 @@
 #include <unordered_map>
 using namespace std;
 class Node {
+public: 
+    bool endOfWord;
+    unordered_map<char, Node*> children;
+    Node (bool b) {endOfWord = b;}
+};
+
+class Solution {
+public:
+    int minExtraChar(string s, vector<string>& dictionary) {
+        //Make Trie
+        Node* root = new Node(false);
+        for (string& word : dictionary) {
+            Node* curr = root;
+            for (char c : word) {
+                if (curr->children.find(c) == curr->children.end()) curr->children[c] = new Node(false);
+                curr = curr->children[c];
+            }
+            curr->endOfWord = true;
+        }
+
+        //Solve every subproblem
+        vector<int> dp(s.size()+1, 0); //dp[i]. i is length of suffix subproblem
+        for (int i = 1; i <= s.size(); ++i) {
+            Node* curr = root;
+            int res = dp[i-1] + 1;
+            for (int j = s.size()-i; j < s.size(); ++j) {
+                if (curr->children.find(s[j]) == curr->children.end()) break;
+                curr = curr->children[s[j]];
+                if (curr->endOfWord) res = min(res, dp[s.size()-j-1]);
+            }
+            dp[i] = res;
+        }
+        
+        //Return correct subproblem result
+        return dp.back();
+    }
+};
+
+#include <string>
+#include <vector>
+#include <unordered_map>
+using namespace std;
+class Node {
 public:
     bool endOfWord;
     unordered_map<char, Node*> children;

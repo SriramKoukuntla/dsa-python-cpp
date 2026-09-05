@@ -1,6 +1,31 @@
 class Solution {
 public:
     vector<vector<int>> subsets(vector<int>& nums) {
+        vector<vector<int>> res;
+        vector<int> temp;
+        helper(res, temp, nums, 0);
+        return res;
+    }
+
+    void helper(vector<vector<int>>& res, vector<int>& temp, vector<int>& nums, int index) {
+        if (index == nums.size()) {
+            res.push_back(temp);
+            return;
+        }
+
+        //don't choose
+        helper(res, temp, nums, index+1);
+
+        //choose
+        temp.push_back(nums[index]);
+        helper(res, temp, nums, index+1);
+        temp.pop_back();
+    }
+};
+
+class Solution {
+public:
+    vector<vector<int>> subsets(vector<int>& nums) {
         vector<vector<int>> res = {{}};
         for (int i = 0; i < nums.size(); ++i) {
             int n = res.size();

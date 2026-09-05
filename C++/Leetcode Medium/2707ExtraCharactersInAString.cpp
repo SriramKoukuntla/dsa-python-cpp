@@ -24,6 +24,48 @@ public:
         }
 
         //Solve every subproblem
+        vector<int> db(s.size()+1, 0); //db[0] means solution for "" subproblem
+        for (int i = 1; i <= s.size(); ++i) {
+            int res = 1 + db[i-1];
+            Node* curr = root;
+            for (int j = s.size()-i; j < s.size(); ++j) {
+                if (curr->children.find(s[j]) == curr->children.end()) break;
+                curr = curr->children[s[j]];
+                int temp = j - (s.size()-i);
+                if (curr->endOfWord) res = min(res, db[i-(temp+1)]);
+            }
+            db[i] = res;
+        }
+        return db.back();
+    }
+};
+
+#include <string>
+#include <vector>
+#include <unordered_map>
+using namespace std;
+class Node {
+public:
+    bool endOfWord;
+    unordered_map<char, Node*> children;
+    Node(bool b) {endOfWord = b;}
+};
+
+class Solution {
+public:
+    int minExtraChar(string s, vector<string>& dictionary) {
+        //Create Trie
+        Node* root = new Node(false);
+        for (string& word : dictionary) {
+            Node* curr = root;
+            for (char c : word) {
+                if (curr->children.find(c) == curr->children.end()) curr->children[c] = new Node(false);
+                curr = curr->children[c];
+            }
+            curr->endOfWord = true;
+        }
+
+        //Solve every subproblem
         vector<int> subProblems(s.size()+1, 0); //index represents size of subproblem. value represents solution to subproblem
         for (int i = 1; i <= s.size(); ++i) {
             string currString = s.substr(s.size()-i, i);

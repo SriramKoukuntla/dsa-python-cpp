@@ -4,6 +4,27 @@ using namespace std;
 class Solution {
 public:
     vector<vector<int>> kClosest(vector<vector<int>>& points, int k) {
+        vector<vector<double>> p;
+        for (vector<int> point : points) {
+            double distance = sqrt(point[0] * point[0] + point[1] * point[1]); 
+            p.push_back({distance, (double)point[0], (double)point[1]});
+        }
+        sort(p.begin(), p.end());
+        while (p.size() > k) p.pop_back();
+
+        vector<vector<int>> res;
+        for (vector<double> temp : p) res.push_back({(int)temp[1], (int)temp[2]});
+
+        return res;
+    }
+};
+
+#include <vector>
+#include <queue>
+using namespace std;
+class Solution {
+public:
+    vector<vector<int>> kClosest(vector<vector<int>>& points, int k) {
         priority_queue<vector<double>> pq;
         for (vector<int> point : points) {
             double distance = sqrt(point[0] * point[0] + point[1] * point[1]); 

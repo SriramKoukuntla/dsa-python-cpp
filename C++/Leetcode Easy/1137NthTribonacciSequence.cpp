@@ -1,3 +1,23 @@
+#include <vector>
+using namespace std;
+class Solution {
+public:
+    vector<int> mem;
+    int tribonacci(int n) {
+        if (n < 2) return n;
+        mem = vector<int>(n+1, -1);
+        mem[0] = 0;
+        mem[1] = 1;
+        mem[2] = 1;
+        return helper(n);
+    }
+    int helper(int n) {
+        if (mem[n] != -1) return mem[n];
+        mem[n] = helper(n-1) + helper(n-2) + helper(n-3);
+        return mem[n];
+    }
+};
+
 class Solution {
 public:
     int tribonacci(int n) {

@@ -1,3 +1,41 @@
+#include <vector>
+#include <queue>
+class Solution {
+public:
+    int findKthLargest(vector<int>& nums, int k) {
+        int smallest = INT_MAX;
+        int largest = INT_MIN;
+        for (int num : nums) {
+            smallest = min(smallest, num);
+            largest = max(largest, num);
+        }
+
+        vector<int> bucket(largest-smallest+1, 0);
+        for (int num : nums) ++bucket[num-smallest];
+
+        int counter = k;
+        for (int i = bucket.size()-1; i >= 0; --i) {
+            counter -= bucket[i];
+            if (counter <= 0) return i + smallest;
+        }
+        return -1;
+    }
+};
+
+#include <vector>
+#include <queue>
+class Solution {
+public:
+    int findKthLargest(vector<int>& nums, int k) {
+        priority_queue<int, vector<int>, greater<int>> minHeap;
+        for (int num : nums) {
+            minHeap.push(num);
+            if (minHeap.size() > k) minHeap.pop();
+        }
+        return minHeap.top();
+    }
+};
+
 #include <utility>
 class Solution {
 public:

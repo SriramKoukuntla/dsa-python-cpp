@@ -1,4 +1,18 @@
 #include <vector>
+using namespace std;
+class Solution {
+public:
+    int climbStairs(int n) {
+        if (n <= 2) return n;
+        vector<int> tab(n, 0); //when index is tab.size()-1, then that means there is only 1 step to the top
+        tab[tab.size()-1] = 1;
+        tab[tab.size()-2] = 2;
+        for (int i = tab.size()-3; i >= 0; --i) tab[i] = tab[i+1] + tab[i+2];
+        return tab[0];
+    }
+};
+
+#include <vector>
 #include <unordered_map>
 using namespace std;
 class Solution {

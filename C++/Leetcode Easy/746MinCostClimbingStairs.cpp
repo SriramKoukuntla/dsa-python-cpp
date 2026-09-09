@@ -3,6 +3,27 @@ using namespace std;
 
 class Solution {
 public:
+    vector<int> mem;
+    int minCostClimbingStairs(vector<int>& cost) {
+        mem = vector<int>(cost.size(), -1);
+        mem[cost.size()-1] = cost[cost.size()-1];
+        mem[cost.size()-2] = cost[cost.size()-2];
+        helper(cost, 0);
+        return min(mem[0], mem[1]);
+    }
+    int helper(vector<int>& cost, int i) {
+        if (mem[i] != -1) return mem[i];
+        int res = cost[i] + min(helper(cost, i+1), helper(cost, i+2));
+        mem[i] = res;
+        return res;
+    }
+};
+
+#include <vector>
+using namespace std;
+
+class Solution {
+public:
     int minCostClimbingStairs(vector<int>& cost) {
         vector<int> tab(cost.size(), 0);
         tab[tab.size()-1] = cost[cost.size()-1];

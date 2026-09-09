@@ -2,6 +2,20 @@
 using namespace std;
 class Solution {
 public:
+    unordered_map<int, int> mem;
+    int climbStairs(int n) {
+        if (n <= 2) return n;
+        if (mem.find(n) != mem.end()) return mem[n];
+        int res = climbStairs(n-1) + climbStairs(n-2);
+        mem[n] = res;
+        return res;
+    }
+};
+
+#include <vector>
+using namespace std;
+class Solution {
+public:
     int climbStairs(int n) {
         if (n <= 2) return n;
         vector<int> tab(n, 0); //when index is tab.size()-1, then that means there is only 1 step to the top

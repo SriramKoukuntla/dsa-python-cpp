@@ -1,4 +1,18 @@
 #include <vector>
+using namespace std;
+class Solution {
+public:
+    bool canAttendMeetings(vector<vector<int>>& intervals) {
+        sort(intervals.begin(), intervals.end());
+        long validStartTime = LONG_MIN;
+        for (int i = 0; i < intervals.size(); ++i) {
+            if (intervals[i][0] >= validStartTime) validStartTime = intervals[i][1];
+            else return false;
+        }
+        return true;
+    }
+};
+#include <vector>
 #include <iostream>
 using namespace std;
 /**

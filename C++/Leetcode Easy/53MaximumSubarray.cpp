@@ -3,6 +3,21 @@ using namespace std;
 class Solution {
 public:
     int maxSubArray(vector<int>& nums) {
+        int currSum = 0;
+        int maxSum = nums[0];
+        for (int num : nums) {
+            currSum = max(currSum + num, num);
+            maxSum = max(maxSum, currSum);
+        }
+        return maxSum;
+    }
+};
+
+#include <vector>
+using namespace std;
+class Solution {
+public:
+    int maxSubArray(vector<int>& nums) {
         return helper(nums, 0, nums.size()-1);
     }
     

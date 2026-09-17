@@ -1,4 +1,24 @@
 #include <vector>
+#include <unordered_map>
+using namespace std;
+class Solution {
+public:
+    int uniquePaths(int m, int n) {
+        vector<vector<int>> mem(m, vector<int>(n, -1));
+        mem[0][0] = 1;
+        return helper(mem, m-1, n-1);
+    }
+
+    int helper(vector<vector<int>>& mem, int m, int n) {
+        if (m < 0 || n < 0) return 0;
+        if (mem[m][n] != -1) return mem[m][n];
+        int res = helper(mem, m, n-1) + helper(mem, m-1, n);
+        mem[m][n] = res;
+        return res; 
+    }
+};
+
+#include <vector>
 using namespace std;
 class Solution {
 public:

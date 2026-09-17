@@ -1,3 +1,20 @@
+#include <vector>
+using namespace std;
+class Solution {
+public:
+    int uniquePaths(int m, int n) { //m = height, n = width
+        vector<vector<int>> tab(m, vector<int>(n, 0));
+        for (int i = 0; i < tab[0].size(); ++i) tab[0][i] = 1; //initialize first row
+        for (int i = 0; i < tab.size(); ++i) tab[i][0] = 1; //initialize first column
+        for (int i = 1; i < tab.size(); ++i) {
+            for (int j = 1; j < tab[0].size(); ++j) {
+                tab[i][j] = tab[i-1][j] + tab[i][j-1];
+            }
+        }
+        return tab.back().back();
+    }
+};
+
 #include <unordered_map>
 using namespace std;
 class Solution {

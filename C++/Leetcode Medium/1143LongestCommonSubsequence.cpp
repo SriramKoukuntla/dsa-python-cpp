@@ -4,6 +4,45 @@ class Solution {
 public:
     int longestCommonSubsequence(string text1, string text2) {
         vector<vector<int>> mem(text1.size(), vector<int>(text2.size(), -1));
+        return helper(mem, mem.size()-1, mem[0].size()-1, text1, text2);
+    }
+
+    int helper(vector<vector<int>>& mem, int i, int j, string& text1, string& text2) {
+        if (mem[i][j] != -1) return mem[i][j];
+        int top = i-1 >= 0 ? helper(mem, i-1, j, text1, text2) : 0;
+        int left = j-1 >= 0 ? helper(mem, i, j-1, text1, text2) : 0;
+        int topLeft = i-1 >= 0 && j-1 >= 0 ? helper(mem, i-1, j-1, text1, text2) : 0;
+        int res = text1[i] == text2[j] ? topLeft + 1 : max(top, left);
+        mem[i][j] = res;
+        return res; 
+    }
+};
+
+#include <vector>
+using namespace std;
+class Solution {
+public:
+    int longestCommonSubsequence(string text1, string text2) {
+        vector<vector<int>> tab(text1.size(), vector<int>(text2.size(), 0));
+        for (int i = 0; i < tab.size(); ++i) {
+            for (int j = 0; j < tab[0].size(); ++j) {
+                int top = i-1 >= 0 ? tab[i-1][j] : 0;
+                int left = j-1 >= 0 ? tab[i][j-1] : 0;
+                int leftTop = i-1 >= 0 && j-1 >= 0  ? tab[i-1][j-1] : 0;
+                if (text1[i] == text2[j]) tab[i][j] = leftTop + 1;
+                else tab[i][j] = max(top, left);
+            }
+        }
+        return tab.back().back();
+    }
+};
+
+#include <vector>
+using namespace std;
+class Solution {
+public:
+    int longestCommonSubsequence(string text1, string text2) {
+        vector<vector<int>> mem(text1.size(), vector<int>(text2.size(), -1));
         return helper(text1, text2, 0, 0, mem);
     }
 

@@ -4,6 +4,32 @@ using namespace std;
 class Solution {
 public:
     string addBinary(string a, string b) {
+        string res = "";
+        int aIdx = a.size()-1;
+        int bIdx = b.size()-1;
+        int carry = 0;
+        while (aIdx >= 0 || bIdx >= 0 || carry == 1) {
+            int sum = 0;
+            if (aIdx >= 0 && a[aIdx] == '1') ++sum;
+            if (bIdx >= 0 && b[bIdx] == '1') ++sum;
+            sum += carry;
+            if (sum % 2 == 1) res += '1';
+            else res += '0';
+            carry = sum/2;
+            --aIdx;
+            --bIdx;
+        }
+        reverse(res.begin(), res.end());
+        return res; 
+    }
+};
+
+#include <list>
+#include <string>
+using namespace std;
+class Solution {
+public:
+    string addBinary(string a, string b) {
         list<char> resList;
         int size = min(a.size(), b.size());
         int carry = 0;

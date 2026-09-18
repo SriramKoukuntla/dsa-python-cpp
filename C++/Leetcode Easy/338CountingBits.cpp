@@ -3,6 +3,20 @@ using namespace std;
 class Solution {
 public:
     vector<int> countBits(int n) {
+        vector<int> tab(n+1, 0);
+        for (int i = 1; i < tab.size(); ++i) {
+            tab[i] = tab[i/2];
+            if (i % 2 == 1) ++tab[i];
+        }
+        return tab;
+    }
+};
+
+#include <vector>
+using namespace std;
+class Solution {
+public:
+    vector<int> countBits(int n) {
         if (n == 0) return {0};
         else if (n == 1) return {0, 1};
         vector<int> res(n+1, 0);

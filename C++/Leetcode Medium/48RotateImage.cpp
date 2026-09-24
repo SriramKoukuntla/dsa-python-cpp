@@ -1,3 +1,23 @@
+#include <bits/stdc++.h>
+using namespace std;
+class Solution {
+public:
+    void rotate(vector<vector<int>>& matrix) {
+        helper(matrix, 0, matrix[0].size()-1, 0, matrix.size()-1);
+    }
+private:
+    void helper(vector<vector<int>>& matrix, int l, int r, int u, int d) {
+        if (r-l <= 0) return;
+        vector<int> temp(r-l, -1);
+        for (int i = l; i <= r-1; ++i) temp[abs(i-l)] = matrix[u][i]; //store top left
+        for (int i = u; i <= d-1; ++i) swap(temp[abs(i-u)], matrix[i][r]); //top right
+        for (int i = r; i >= l+1; --i) swap(temp[abs(i-r)], matrix[d][i]); //bottom right
+        for (int i = d; i >= u+1; --i) swap(temp[abs(i-d)], matrix[i][l]); //bottom left
+        for (int i = l; i <= r-1; ++i) swap(temp[abs(i-l)], matrix[u][i]); //top left;
+        helper(matrix, l+1, r-1, u+1, d-1);
+    }
+};
+
 #include <vector>
 using namespace std;
 class Solution {

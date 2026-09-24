@@ -7,6 +7,27 @@ public:
     }
 private:
     void helper(vector<vector<int>>& matrix, int l, int r, int u, int d) {
+        if (l >= r) return;
+        for (int i = 0; i < r-l; ++i) {
+            int temp = matrix[u][l+i]; //save top left
+            matrix[u][l+i] = matrix[d-i][l];
+            matrix[d-i][l] = matrix[d][r-i];
+            matrix[d][r-i] = matrix[u+i][r];
+            matrix[u+i][r] = temp;
+        }
+        helper(matrix, l+1, r-1, u+1, d-1);
+    }
+};
+
+#include <bits/stdc++.h>
+using namespace std;
+class Solution {
+public:
+    void rotate(vector<vector<int>>& matrix) {
+        helper(matrix, 0, matrix[0].size()-1, 0, matrix.size()-1);
+    }
+private:
+    void helper(vector<vector<int>>& matrix, int l, int r, int u, int d) {
         if (r-l <= 0) return;
         vector<int> temp(r-l, -1);
         for (int i = l; i <= r-1; ++i) temp[abs(i-l)] = matrix[u][i]; //store top left

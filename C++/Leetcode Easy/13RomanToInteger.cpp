@@ -1,4 +1,44 @@
+#include <bits/stdc++.h>
+using namespace std;
+class Solution {
+public:
+    int romanToInt(string s) {
+        int res = 0;
+        int index = 0;
+        unordered_map<string, int> convert;
+        convert["I"] = 1;
+        convert["V"] = 5;
+        convert["X"] = 10;
+        convert["L"] = 50;
+        convert["C"] = 100;
+        convert["D"] = 500;
+        convert["M"] = 1000;
+        convert["IV"] = 4;
+        convert["IX"] = 9;
+        convert["XL"] = 40;
+        convert["XC"] = 90;
+        convert["CD"] = 400;
+        convert["CM"] = 900;
+
+        while (index < s.size()) {
+            if (index + 1 < s.size()) {
+                string firstTwo = s.substr(index, 2);
+                if (convert.find(firstTwo) != convert.end()) {
+                    res += convert[firstTwo];
+                    index += 2;
+                    continue;
+                }
+            }
+            res += convert[string(1, s[index])];
+            index += 1;
+        }
+        return res;
+
+    }
+};
+
 #include <string>
+
 #include <unordered_map>
 using namespace std;
 class Solution {

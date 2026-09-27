@@ -1,3 +1,33 @@
+#include <bits/stdc++.h>
+using namespace std;
+class Solution {
+public:
+    int reverse(int x) {
+        int res = 0;
+
+        int numDigits = 0;
+        int temp = INT_MAX;
+        while (temp != 0) {
+            temp /= 10;
+            numDigits++;
+        }
+
+        int counter = 0;
+        while (x != 0 && counter != numDigits-1) {
+            res *= 10;
+            res += x % 10;
+            x /= 10;
+            ++counter;
+        }
+        if (x == 0) return res;
+        if (res > 0 && (res > INT_MAX/10 || (res == INT_MAX/10 && x > INT_MAX % 10))) return 0;
+        if (res < 0 && (res < INT_MIN/10 || (res == INT_MIN/10 && x < INT_MIN % 10))) return 0;
+        res *= 10;
+        res += x % 10;
+        return res;
+    }
+};
+
 #include <string>
 using namespace std;
 class Solution {

@@ -3,6 +3,32 @@ using namespace std;
 class Solution {
 public:
     int findTargetSumWays(vector<int>& nums, int target) {
+        int n = 0;
+        for (int num : nums) n += num;
+        if (abs(target) > n) return 0;
+        vector<vector<int>> tab(nums.size()+1, vector<int>((2*n)+1, 0));
+        target += n;
+        tab.back()[target] = 1;
+
+        for (int i = nums.size()-1; i >= 0; --i) {
+            int currNum = nums[i];
+            for (int j = 0; j < tab[0].size(); ++j) {
+                tab[i][j] = 0;
+                if (j + currNum < tab[0].size()) tab[i][j] += tab[i+1][j+currNum];
+                if (j-currNum >= 0) tab[i][j] += tab[i+1][j-currNum];
+            }
+        }
+        return tab[0][n];
+    }
+};
+//state: index, sum
+//tab[i][sum] = using the number from i onwards given sum, how many ways to reach target;
+
+#include <bits/stdc++.h>
+using namespace std;
+class Solution {
+public:
+    int findTargetSumWays(vector<int>& nums, int target) {
         unordered_map<int, unordered_map<int, int>> cache;
         return dfs(cache, nums, target, 0);
     }

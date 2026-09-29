@@ -3,6 +3,27 @@ using namespace std;
 class Solution {
 public:
     int maxProfit(vector<int>& prices) {
+        vector<vector<int>> tab(prices.size()+1, vector<int>(2, 0)); //0 is buy, 1 is sell
+        tab[prices.size()-1][0] = 0;
+        tab[prices.size()-1][1] = prices.back();
+            
+        for (int i = prices.size()-2; i >= 0; --i) {
+            tab[i][0] = max(tab[i+1][0], -prices[i] + tab[i+1][1]);
+            tab[i][1] = max(tab[i+1][1], prices[i] + tab[i+2][0]);
+        }
+        return tab[0][0];
+        
+    }
+};
+
+//state. buy or sell, index,.
+//recurrence relationship: 
+
+#include <bits/stdc++.h>
+using namespace std;
+class Solution {
+public:
+    int maxProfit(vector<int>& prices) {
         unordered_map<int, unordered_map<bool, int>> cache;
         return dfs(cache, prices, 0, false);
     }

@@ -1,3 +1,25 @@
+#include <bits/stdc++.h>
+using namespace std;
+class Solution {
+public:
+    int change(int amount, vector<int>& coins) {
+        unordered_map<int, unordered_map<int, int>> cache;
+        return dfs(cache, coins, amount, 0);
+    }
+
+    int dfs(unordered_map<int, unordered_map<int, int>>& cache, vector<int>& coins, int amount, int index) {
+        if (amount < 0) return 0;
+        if (amount == 0) return 1;
+        if (index == coins.size()) return 0;
+        if (cache[amount].find(index) != cache[amount].end()) return cache[amount][index];
+        int skip = dfs(cache, coins, amount, index+1);
+        int partake = dfs(cache, coins, amount-coins[index], index);
+        int res = skip + partake;
+        cache[amount][index] = res;
+        return res; 
+    }
+};
+
 #include <vector>
 #include <algorithm>
 class Solution {

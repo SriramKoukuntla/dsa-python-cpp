@@ -1,3 +1,23 @@
+#include <bits/stdc++.h>
+using namespace std;
+class Solution {
+public:
+    int findTargetSumWays(vector<int>& nums, int target) {
+        unordered_map<int, unordered_map<int, int>> cache;
+        return dfs(cache, nums, target, 0);
+    }
+    int dfs (unordered_map<int, unordered_map<int, int>>& cache, vector<int>& nums, int target, int index) {
+        if (index == nums.size() && target == 0) return 1;
+        if (index == nums.size() && target != 0) return 0;
+        if (cache[target].find(index) != cache[target].end()) return cache[target][index];
+        int add = dfs(cache, nums, target+nums[index], index+1);
+        int subtract = dfs(cache, nums, target-nums[index], index+1);
+        int res = add + subtract;
+        cache[target][index] = res;
+        return res;
+    }
+};
+
 //DFS + DP
 class Solution {
 public:

@@ -3,6 +3,28 @@ using namespace std;
 class Solution {
 public:
     bool stoneGame(vector<int>& piles) {
+        unordered_map<int, unordered_map<int, int>> cache;
+        return dfs(cache, piles, 0, piles.size()-1) > 0;
+    }
+    int dfs(unordered_map<int, unordered_map<int, int>>& cache, vector<int>& piles, int l, int r) {
+        if (l == r) return piles[l];
+        if (cache[l].find(r) != cache[l].end()) return cache[l][r];
+        int res = max(piles[l] - dfs(cache, piles, l+1, r), piles[r] - dfs(cache, piles, l, r-1));
+        cache[l][r] = res;
+        return res;
+    }
+};
+//state space = who's turn it is, index l, index r
+//tab[l][r][0,1]
+//true means alice's turn. false means bob's turn
+
+//alice starts first
+
+#include <bits/stdc++.h>
+using namespace std;
+class Solution {
+public:
+    bool stoneGame(vector<int>& piles) {
         vector<vector<int>> tab(piles.size(), vector<int>(piles.size(), -1));
         for (int i = 0; i < piles.size(); ++i) tab[i][i] = piles[i];
 

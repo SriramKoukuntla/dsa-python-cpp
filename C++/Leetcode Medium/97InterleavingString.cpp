@@ -1,3 +1,28 @@
+#include <bits/stdc++.h>
+using namespace std;
+class Solution {
+public:
+    bool isInterleave(string s1, string s2, string s3) {
+        if (s1.size() + s2.size() != s3.size()) return false;
+        unordered_map<int, unordered_map<int, int>> cache;
+        return dfs(cache, s1, s2, s3, 0, 0);
+    }
+
+    bool dfs(unordered_map<int, unordered_map<int, int>>& cache, 
+            string& s1, string& s2, string& s3, int s1Index, int s2Index) {
+        int s3Index = s1Index + s2Index;
+        if (s3Index == s3.size()) return true;
+        if (cache[s1Index].find(s2Index) != cache[s1Index].end()) return cache[s1Index][s2Index];
+        bool useS1 = (s1Index >= s1.size()) ? false :
+                (s1[s1Index] == s3[s3Index]) && dfs(cache, s1, s2, s3, s1Index+1, s2Index);
+        bool useS2 = (s2Index >= s2.size()) ? false :
+                (s2[s2Index] == s3[s3Index]) && dfs(cache, s1, s2, s3, s1Index, s2Index+1);
+        bool res = useS1 || useS2;
+        cache[s1Index][s2Index] = res;
+        return res; 
+    }
+};
+
 class Solution {
 public:
     bool isInterleave(string s1, string s2, string s3) {

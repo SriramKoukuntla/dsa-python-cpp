@@ -2,6 +2,34 @@ class Solution {
 public:
     bool isInterleave(string s1, string s2, string s3) {
         if (s1.size() + s2.size() != s3.size()) return false;
+        vector<bool> tab(s2.size()+1, false);
+        tab[0]= true;        
+        for (int i = 1; i < tab.size(); ++i) {
+            int s2Index = i-1;
+            int s3Index = i-1;
+            tab[i] = (tab[i-1]) & (s2[s2Index] == s3[s3Index]);
+        }
+    
+        for (int i = 0; i < s1.size(); ++i) {
+            int s1Index = i;
+            int s3Index = i;
+            tab[0] = (tab[0]) & (s1[s1Index] == s3[s3Index]);
+            for (int j = 1; j < tab.size(); ++j) {
+                int s2Index = j-1;
+                s3Index = s1Index + s2Index + 1;
+                tab[j] = ((tab[j-1]) & (s2[s2Index] == s3[s3Index]) | 
+                         ((tab[j]) & (s1[s1Index] == s3[s3Index])));
+            }
+        }
+
+        return tab.back();
+    }
+};
+
+class Solution {
+public:
+    bool isInterleave(string s1, string s2, string s3) {
+        if (s1.size() + s2.size() != s3.size()) return false;
         vector<vector<bool>> tab(s1.size()+1, vector<bool>(s2.size()+1, false));
         tab[0][0] = true;        
         for (int i = 1; i <= s1.size(); ++i) {

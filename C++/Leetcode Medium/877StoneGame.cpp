@@ -3,6 +3,32 @@ using namespace std;
 class Solution {
 public:
     bool stoneGame(vector<int>& piles) {
+        vector<vector<int>> tab(piles.size(), vector<int>(piles.size(), -1));
+        for (int i = 0; i < piles.size(); ++i) tab[i][i] = piles[i];
+
+        //simulate every size game
+        for (int i = 1; i < piles.size(); ++i) {
+            for (int j = 0; j < piles.size()-i; ++j) {
+                int l = j;
+                int r = j+i;
+
+                tab[l][r] = max(piles[l] - tab[l+1][r], piles[r] - tab[l][r-1]);
+            }
+        }
+        return tab[0][piles.size()-1] > 0;
+    }
+};
+//state space = who's turn it is, index l, index r
+//tab[l][r][0,1]
+//true means alice's turn. false means bob's turn
+
+//alice starts first
+
+#include <bits/stdc++.h>
+using namespace std;
+class Solution {
+public:
+    bool stoneGame(vector<int>& piles) {
         vector<vector<vector<int>>> tab(piles.size(), vector<vector<int>>(piles.size(), vector<int>(2, -1)));
         for (int i = 0; i < piles.size(); ++i) {
             tab[i][i][0] = piles[i];

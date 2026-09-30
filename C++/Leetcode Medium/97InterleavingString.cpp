@@ -1,3 +1,33 @@
+class Solution {
+public:
+    bool isInterleave(string s1, string s2, string s3) {
+        if (s1.size() + s2.size() != s3.size()) return false;
+        vector<vector<bool>> tab(s1.size()+1, vector<bool>(s2.size()+1, false));
+        tab[0][0] = true;        
+        for (int i = 1; i <= s1.size(); ++i) {
+            int s3Index = i-1;
+            int s1Index = i-1;
+            tab[i][0] = (tab[i-1][0]) & (s1[s1Index] == s3[s3Index]);
+        }
+        for (int i = 1; i <= s2.size(); ++i) {
+            int s3Index = -1 + i;
+            int s2Index = i-1;
+            tab[0][i] = (tab[0][i-1]) & (s2[s2Index] == s3[s3Index]);
+        }
+        for (int i = 1; i <= s1.size(); ++i) {
+            for (int j = 1; j <= s2.size(); ++j) {
+                int s1Index = i-1;
+                int s2Index = j-1;
+                int s3Index = j+i-1;
+                tab[i][j] = 
+                    ((tab[i-1][j]) & (s1[s1Index] == s3[s3Index])) | 
+                    ((tab[i][j-1]) & (s2[s2Index] == s3[s3Index]));
+            }
+        }
+        return tab.back().back();
+    }
+};
+
 #include <unordered_map>
 class Solution {
 public:

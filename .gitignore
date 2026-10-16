@@ -1,0 +1,22 @@
+# C/C++ build artifacts
+*.o
+*.obj
+*.a
+*.lib
+*.so
+*.dylib
+*.dll
+*.exe
+*.out
+/a.out
+*.dSYM/
+
+# Executable built by the VS Code task for Subordinates.cpp
+/C++/TreeDPLearning/Subordinates
+
+# CMake build files
+/build/
+cmake-build-*/
+CMakeFiles/
+CMakeCache.txt
+cmake_install.cmake

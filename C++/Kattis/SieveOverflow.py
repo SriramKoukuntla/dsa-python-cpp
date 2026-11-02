@@ -16,11 +16,6 @@ for i in range(upperBounds+1, len(isPrime)):
     if isPrime[i] == "NONE":
         isPrime[i] = "PRIME"
     
-# for i in range(len(isPrime)):
-#     print(isPrime[i])
-
-# print("divider")
-
 l = 2
 r = m
 ans = -1
